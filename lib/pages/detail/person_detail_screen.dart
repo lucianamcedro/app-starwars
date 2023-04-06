@@ -19,7 +19,6 @@ class PersonDetailScreen extends StatelessWidget {
             Text('Name: ${person.name}'),
             Text('Birth Year: ${person.birthYear}'),
             Text('Gender: ${person.gender}'),
-            // adicione mais informações aqui, se desejar
           ],
         ),
       ),

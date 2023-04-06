@@ -1,3 +1,4 @@
+import 'package:desafio_starwars_flutter/data/repository/person_favorites/person_favorites.dart';
 import 'package:desafio_starwars_flutter/data/repository/repository.dart';
 import 'package:desafio_starwars_flutter/data/usecase/usecase.dart';
 import 'package:desafio_starwars_flutter/pages/bloc/bloc.dart';
@@ -20,6 +21,10 @@ class DependencyInjection {
       () => MoviesRepositoryImpl(),
     );
 
+    getIt.registerFactory<PersonFavoritesRepository>(
+      () => PersonFavoritesRepositoryImpl(),
+    );
+
     // USE CASE
     getIt.registerLazySingleton<PersonsUsecase>(
       () => PersonsUsecaseImpl(
@@ -39,6 +44,12 @@ class DependencyInjection {
       ),
     );
 
+    getIt.registerLazySingleton<PersonFavoritesUsecase>(
+      () => PersonFavoritesUsecaseImpl(
+        personFavoritesRepository: getIt<PersonFavoritesRepository>(),
+      ),
+    );
+
     // BLOC
     getIt.registerFactory<PersonBloc>(
       () => PersonBloc(
@@ -53,6 +64,12 @@ class DependencyInjection {
     getIt.registerFactory<PlanetBloc>(
       () => PlanetBloc(
         planetUsecase: getIt<PlanetUsecase>(),
+      ),
+    );
+
+    getIt.registerFactory<PersonFavoritesBloc>(
+      () => PersonFavoritesBloc(
+        personFavoritesUsecase: getIt<PersonFavoritesUsecase>(),
       ),
     );
   }
