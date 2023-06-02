@@ -1,16 +1,16 @@
 import 'dart:convert';
 
-class PersonFavorites {
+class Favorites {
   final String name;
 
-  PersonFavorites({
+  Favorites({
     required this.name,
   });
 
-  PersonFavorites copyWith({
+  Favorites copyWith({
     String? name,
   }) {
-    return PersonFavorites(
+    return Favorites(
       name: name ?? this.name,
     );
   }
@@ -21,22 +21,22 @@ class PersonFavorites {
     };
   }
 
-  factory PersonFavorites.fromMap(Map<String, dynamic> map) {
-    return PersonFavorites(
+  factory Favorites.fromMap(Map<String, dynamic> map) {
+    return Favorites(
       name: map['name'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory PersonFavorites.fromJson(String source) =>
-      PersonFavorites.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Favorites.fromJson(String source) =>
+      Favorites.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'PersonFavorites(name: $name)';
+  String toString() => 'Favorites(name: $name)';
 
   @override
-  bool operator ==(covariant PersonFavorites other) {
+  bool operator ==(covariant Favorites other) {
     if (identical(this, other)) return true;
 
     return other.name == name;

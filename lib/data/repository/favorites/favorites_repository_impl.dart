@@ -2,32 +2,30 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:desafio_starwars_flutter/starwars.dart';
 
-class PersonFavoritesRepositoryImpl implements PersonFavoritesRepository {
+class PersonFavoritesRepositoryImpl implements FavoritesRepository {
   final _prefs = SharedPreferences.getInstance();
 
   @override
-  Future<List<PersonFavorites>> getFavoritePerson() async {
+  Future<List<Favorites>> getFavorite() async {
     final prefs = await _prefs;
     final favorites = prefs.getStringList('favorites') ?? [];
 
-    return favorites
-        .map((fav) => PersonFavorites.fromJson(jsonDecode(fav)))
-        .toList();
+    return favorites.map((fav) => Favorites.fromJson(jsonDecode(fav))).toList();
   }
 
   @override
-  Future<void> addPersonFavorite(PersonFavorites personFavorite) async {
+  Future<void> addItemFavorite(Favorites itemFavorite) async {
     final prefs = await _prefs;
     final favorites = prefs.getStringList('favorites') ?? [];
 
     final index = favorites.indexWhere((fav) {
       final favorite = jsonDecode(fav);
-      return (favorite is Map) && (favorite['name'] == personFavorite.name);
+      return (favorite is Map) && (favorite['name'] == itemFavorite.name);
     });
 
     if (index < 0) {
-      final favorite = PersonFavorites(
-        name: personFavorite.name,
+      final favorite = Favorites(
+        name: itemFavorite.name,
       );
       favorites.add(jsonEncode(favorite.toJson()));
 
@@ -36,14 +34,14 @@ class PersonFavoritesRepositoryImpl implements PersonFavoritesRepository {
   }
 
   @override
-  Future<void> removePersonFavorite(PersonFavorites personFavorites) async {
+  Future<void> removeItemFavorite(Favorites itemFavorite) async {
     final prefs = await _prefs;
     final favorites = prefs.getStringList('favorites') ?? [];
 
     final index = favorites.indexWhere((fav) {
       try {
         final favorite = jsonDecode(fav);
-        return favorite['name'] == personFavorites.name;
+        return favorite['name'] == itemFavorite.name;
       } catch (e) {
         print('Error decoding JSON string: $fav');
         return false;
@@ -57,10 +55,11 @@ class PersonFavoritesRepositoryImpl implements PersonFavoritesRepository {
   }
 
   @override
-  Future<void> setFavoritePerson(List<PersonFavorites> favorites) async {
+  Future<void> setFavoriteItem(List<Favorites> itemFavorite) async {
     final prefs = await _prefs;
-    final encodedFavorites =
-        favorites.map((favorite) => jsonEncode(favorite.toJson())).toList();
+    final encodedFavorites = itemFavorite
+        .map((itemFavorite) => jsonEncode(itemFavorite.toJson()))
+        .toList();
 
     await prefs.setStringList('favorites', encodedFavorites);
   }

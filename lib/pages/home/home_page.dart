@@ -134,7 +134,7 @@ class HomePage extends StatelessWidget {
                     child: InkWell(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => PersonFavoritesPage(
+                          builder: (context) => FavoritesPage(
                             name: '',
                           ),
                         ));

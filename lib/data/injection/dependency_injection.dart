@@ -18,7 +18,7 @@ class DependencyInjection {
       () => MoviesRepositoryImpl(),
     );
 
-    getIt.registerFactory<PersonFavoritesRepository>(
+    getIt.registerFactory<FavoritesRepository>(
       () => PersonFavoritesRepositoryImpl(),
     );
 
@@ -41,9 +41,9 @@ class DependencyInjection {
       ),
     );
 
-    getIt.registerLazySingleton<PersonFavoritesUsecase>(
-      () => PersonFavoritesUsecaseImpl(
-        personFavoritesRepository: getIt<PersonFavoritesRepository>(),
+    getIt.registerLazySingleton<FavoritesUsecase>(
+      () => FavoritesUsecaseImpl(
+        favoritesRepository: getIt<FavoritesRepository>(),
       ),
     );
 
@@ -64,9 +64,9 @@ class DependencyInjection {
       ),
     );
 
-    getIt.registerFactory<PersonFavoritesBloc>(
-      () => PersonFavoritesBloc(
-        personFavoritesUsecase: getIt<PersonFavoritesUsecase>(),
+    getIt.registerFactory<FavoritesBloc>(
+      () => FavoritesBloc(
+        favoritesUsecase: getIt<FavoritesUsecase>(),
       ),
     );
   }

@@ -12,7 +12,7 @@ class PersonPage extends StatefulWidget {
 
 class _PersonPageState extends State<PersonPage> {
   late PersonBloc _personBloc;
-  late PersonFavoritesBloc _personFavoritesBloc;
+  late FavoritesBloc _favoritesBloc;
   List<bool> isFavoriteList = [];
   List<Person> people = [];
 
@@ -22,8 +22,8 @@ class _PersonPageState extends State<PersonPage> {
     _personBloc = GetIt.I.get<PersonBloc>();
     _personBloc.add(OnLoadPerson());
 
-    _personFavoritesBloc = GetIt.I.get<PersonFavoritesBloc>();
-    _personFavoritesBloc.add(OnLoadPersonFavorites());
+    _favoritesBloc = GetIt.I.get<FavoritesBloc>();
+    _favoritesBloc.add(OnLoadFavorites());
   }
 
   @override
@@ -47,11 +47,11 @@ class _PersonPageState extends State<PersonPage> {
         builder: (context, state) {
           if (state is PersonSuccessState) {
             people = state.person;
-            return BlocBuilder<PersonFavoritesBloc, PersonFavoritesState>(
-              bloc: _personFavoritesBloc,
+            return BlocBuilder<FavoritesBloc, FavoritesState>(
+              bloc: _favoritesBloc,
               builder: (context, favoritesState) {
-                if (favoritesState is PersonFavoritesSuccessState) {
-                  final favorites = favoritesState.personagem;
+                if (favoritesState is FavoritesSuccessState) {
+                  final favorites = favoritesState.favorite;
                   isFavoriteList = List<bool>.filled(people.length, false);
                   for (var i = 0; i < people.length; i++) {
                     final person = people[i];
@@ -84,13 +84,13 @@ class _PersonPageState extends State<PersonPage> {
                                 Text(person.name),
                                 IconButton(
                                   onPressed: () {
-                                    final favoritePerson = PersonFavorites(
+                                    final favoritePerson = Favorites(
                                       name: person.name,
                                     );
                                     if (isFavorite) {
-                                      _personFavoritesBloc.add(
-                                        OnRemovePersonFavorite(
-                                          personFavorite: favoritePerson,
+                                      _favoritesBloc.add(
+                                        OnRemoveFavorite(
+                                          favorite: favoritePerson,
                                         ),
                                       );
                                       ScaffoldMessenger.of(context)
@@ -104,9 +104,9 @@ class _PersonPageState extends State<PersonPage> {
                                         ),
                                       );
                                     } else {
-                                      _personFavoritesBloc.add(
-                                        OnAddPersonFavorite(
-                                          personFavorite: favoritePerson,
+                                      _favoritesBloc.add(
+                                        OnAddFavorite(
+                                          favorite: favoritePerson,
                                         ),
                                       );
                                       ScaffoldMessenger.of(context)

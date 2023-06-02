@@ -3,42 +3,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-class PersonFavoritesPage extends StatefulWidget {
+class FavoritesPage extends StatefulWidget {
   final String name;
-  const PersonFavoritesPage({
-    Key? key,
+  const FavoritesPage({
+    super.key,
     required this.name,
-  }) : super(key: key);
+  });
 
   @override
-  State<PersonFavoritesPage> createState() => _PersonFavoritesPageState();
+  State<FavoritesPage> createState() => _FavoritesPageState();
 }
 
-class _PersonFavoritesPageState extends State<PersonFavoritesPage> {
-  late PersonFavoritesBloc personFavoritesBloc;
+class _FavoritesPageState extends State<FavoritesPage> {
+  late FavoritesBloc favoritesBloc;
 
   @override
   void initState() {
     super.initState();
-    personFavoritesBloc = GetIt.I.get<PersonFavoritesBloc>();
-    personFavoritesBloc.add(OnLoadPersonFavorites());
+    favoritesBloc = GetIt.I.get<FavoritesBloc>();
+    favoritesBloc.add(OnLoadFavorites());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Personagens Favoritos'),
+        title: const Text('Favoritos'),
       ),
-      body: BlocBuilder<PersonFavoritesBloc, PersonFavoritesState>(
-        bloc: personFavoritesBloc,
+      body: BlocBuilder<FavoritesBloc, FavoritesState>(
+        bloc: favoritesBloc,
         builder: (context, state) {
-          if (state is PersonFavoritesSuccessState) {
-            final favorites = state.personagem;
+          if (state is FavoritesSuccessState) {
+            final favorites = state.favorite;
 
             if (favorites.isEmpty) {
               return Center(
-                child: Text('Nenhum personagem favorito.'),
+                child: Text('Nenhum favorito.'),
               );
             }
 
@@ -52,8 +52,8 @@ class _PersonFavoritesPageState extends State<PersonFavoritesPage> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          personFavoritesBloc.add(
-                            OnRemovePersonFavorite(personFavorite: person),
+                          favoritesBloc.add(
+                            OnRemoveFavorite(favorite: person),
                           );
                         },
                         icon: Icon(
@@ -68,7 +68,7 @@ class _PersonFavoritesPageState extends State<PersonFavoritesPage> {
                 );
               },
             );
-          } else if (state is PersonFavoritesErrorState) {
+          } else if (state is PersonErrorState) {
             return Center(
               child: Text('Erro ao carregar os personagens favoritos.'),
             );
