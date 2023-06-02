@@ -1,7 +1,4 @@
-import 'package:desafio_starwars_flutter/domain/models/person_favorites_model.dart';
-import 'package:desafio_starwars_flutter/domain/models/person_model.dart';
-import 'package:desafio_starwars_flutter/pages/bloc/bloc.dart';
-import 'package:desafio_starwars_flutter/pages/detail/person_detail_screen.dart';
+import 'package:desafio_starwars_flutter/starwars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';

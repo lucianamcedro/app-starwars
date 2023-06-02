@@ -1,5 +1,4 @@
-import 'package:desafio_starwars_flutter/data/injection/dependency_injection.dart';
-import 'package:desafio_starwars_flutter/pages/home/home_page.dart';
+import 'package:desafio_starwars_flutter/starwars.dart';
 import 'package:flutter/material.dart';
 
 void main() {

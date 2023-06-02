@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:desafio_starwars_flutter/domain/models/person_favorites_model.dart';
-import 'person_favorites_repository.dart';
+import 'package:desafio_starwars_flutter/starwars.dart';
 
 class PersonFavoritesRepositoryImpl implements PersonFavoritesRepository {
   final _prefs = SharedPreferences.getInstance();

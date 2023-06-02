@@ -1,8 +1,6 @@
 import 'dart:developer';
-import 'package:desafio_starwars_flutter/domain/models/planet_model.dart';
-import 'package:desafio_starwars_flutter/domain/shared/const.dart';
+import 'package:desafio_starwars_flutter/starwars.dart';
 import 'package:dio/dio.dart';
-import 'planet_repository.dart';
 
 class PlanetRepositoryImpl implements PlanetRepository {
   @override

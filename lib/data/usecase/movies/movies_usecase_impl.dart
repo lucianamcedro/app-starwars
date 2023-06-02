@@ -1,7 +1,4 @@
-import 'package:desafio_starwars_flutter/data/repository/repository.dart';
-import 'package:desafio_starwars_flutter/domain/models/movies_model.dart';
-
-import './movies_usecase.dart';
+import 'package:desafio_starwars_flutter/starwars.dart';
 
 class MoviesUsecaseImpl implements MoviesUsecase {
   final MoviesRepository moviesRepository;

@@ -1,7 +1,4 @@
-import 'package:desafio_starwars_flutter/data/repository/person_favorites/person_favorites.dart';
-import 'package:desafio_starwars_flutter/data/repository/repository.dart';
-import 'package:desafio_starwars_flutter/data/usecase/usecase.dart';
-import 'package:desafio_starwars_flutter/pages/bloc/bloc.dart';
+import 'package:desafio_starwars_flutter/starwars.dart';
 import 'package:get_it/get_it.dart';
 
 class DependencyInjection {

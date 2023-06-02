@@ -1,11 +1,14 @@
-import 'package:desafio_starwars_flutter/pages/bloc/bloc.dart';
+import 'package:desafio_starwars_flutter/starwars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 class PersonFavoritesPage extends StatefulWidget {
   final String name;
-  const PersonFavoritesPage({Key? key, required this.name}) : super(key: key);
+  const PersonFavoritesPage({
+    Key? key,
+    required this.name,
+  }) : super(key: key);
 
   @override
   State<PersonFavoritesPage> createState() => _PersonFavoritesPageState();

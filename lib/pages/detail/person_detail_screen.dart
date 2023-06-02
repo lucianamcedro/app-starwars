@@ -1,4 +1,4 @@
-import 'package:desafio_starwars_flutter/domain/models/person_model.dart';
+import 'package:desafio_starwars_flutter/starwars.dart';
 import 'package:flutter/material.dart';
 
 class PersonDetailScreen extends StatelessWidget {

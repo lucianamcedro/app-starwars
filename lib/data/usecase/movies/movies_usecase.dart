@@ -1,4 +1,4 @@
-import 'package:desafio_starwars_flutter/domain/models/movies_model.dart';
+import 'package:desafio_starwars_flutter/starwars.dart';
 
 abstract class MoviesUsecase {
   Future<List<Movies>> getMovies();

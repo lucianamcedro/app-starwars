@@ -1,6 +1,7 @@
-import 'package:desafio_starwars_flutter/data/repository/person_favorites/person_favorites.dart';
+import 'package:desafio_starwars_flutter/data/repository/repository.dart';
 import 'package:desafio_starwars_flutter/domain/models/person_favorites_model.dart';
-import './person_favorites_usecase.dart';
+
+import 'person_favorites_usecase.dart';
 
 class PersonFavoritesUsecaseImpl implements PersonFavoritesUsecase {
   final PersonFavoritesRepository personFavoritesRepository;

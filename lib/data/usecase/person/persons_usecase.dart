@@ -1,4 +1,4 @@
-import 'package:desafio_starwars_flutter/domain/models/person_model.dart';
+import 'package:desafio_starwars_flutter/starwars.dart';
 
 abstract class PersonsUsecase {
   Future<List<Person>> getPersons();

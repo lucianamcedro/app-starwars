@@ -1,6 +1,4 @@
-import 'package:desafio_starwars_flutter/pages/home/widgets/movies_page.dart';
-import 'package:desafio_starwars_flutter/pages/home/widgets/planet_page.dart';
-import 'package:desafio_starwars_flutter/pages/pages.dart';
+import 'package:desafio_starwars_flutter/starwars.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {

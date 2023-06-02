@@ -1,7 +1,4 @@
-import 'package:desafio_starwars_flutter/data/repository/person/person_repository.dart';
-import 'package:desafio_starwars_flutter/domain/models/person_model.dart';
-
-import './persons_usecase.dart';
+import 'package:desafio_starwars_flutter/starwars.dart';
 
 class PersonsUsecaseImpl implements PersonsUsecase {
   final PersonRepository personRepository;

@@ -1,1 +1,2 @@
-export './widgets/person_page.dart';
+export 'widgets/widgets.dart';
+export 'home_page.dart';

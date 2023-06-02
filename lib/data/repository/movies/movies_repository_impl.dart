@@ -1,10 +1,7 @@
 import 'dart:developer';
 
-import 'package:desafio_starwars_flutter/domain/models/movies_model.dart';
-import 'package:desafio_starwars_flutter/domain/shared/const.dart';
+import 'package:desafio_starwars_flutter/starwars.dart';
 import 'package:dio/dio.dart';
-
-import './movies_repository.dart';
 
 class MoviesRepositoryImpl implements MoviesRepository {
   @override

@@ -1,5 +1,4 @@
-import 'package:desafio_starwars_flutter/data/usecase/usecase.dart';
-import 'package:desafio_starwars_flutter/domain/models/person_model.dart';
+import 'package:desafio_starwars_flutter/starwars.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
