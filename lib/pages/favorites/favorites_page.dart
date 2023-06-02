@@ -7,9 +7,9 @@ class FavoritesPage extends StatefulWidget {
   final String name;
 
   const FavoritesPage({
-    Key? key,
+    super.key,
     required this.name,
-  }) : super(key: key);
+  });
 
   @override
   State<FavoritesPage> createState() => _FavoritesPageState();
@@ -31,21 +31,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: const Text(
-          'Favoritos',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-        centerTitle: false,
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
+      appBar: AppBarStar(
+        title: 'Favorites',
       ),
       body: Builder(
         builder: (context) {

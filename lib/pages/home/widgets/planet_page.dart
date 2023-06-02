@@ -29,21 +29,8 @@ class _PlanetPageState extends State<PlanetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: const Text(
-          'Planetas',
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        centerTitle: false,
+      appBar: AppBarStar(
+        title: 'Planetas',
       ),
       body: BlocBuilder<PlanetBloc, PlanetState>(
         bloc: _planetBloc,
