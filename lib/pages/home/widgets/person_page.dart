@@ -15,7 +15,7 @@ class PersonPage extends StatefulWidget {
 
 class _PersonPageState extends State<PersonPage> {
   late PersonBloc _personBloc;
-  late PersonFavoritesBloc personFavoritesBloc;
+  late PersonFavoritesBloc _personFavoritesBloc;
   List<bool> isFavoriteList = [];
   List<Person> people = [];
 
@@ -25,8 +25,8 @@ class _PersonPageState extends State<PersonPage> {
     _personBloc = GetIt.I.get<PersonBloc>();
     _personBloc.add(OnLoadPerson());
 
-    personFavoritesBloc = GetIt.I.get<PersonFavoritesBloc>();
-    personFavoritesBloc.add(OnLoadPersonFavorites());
+    _personFavoritesBloc = GetIt.I.get<PersonFavoritesBloc>();
+    _personFavoritesBloc.add(OnLoadPersonFavorites());
   }
 
   @override
@@ -45,8 +45,8 @@ class _PersonPageState extends State<PersonPage> {
         ),
         centerTitle: false,
       ),
-      body: BlocProvider<PersonFavoritesBloc>(
-        create: (context) => personFavoritesBloc,
+      body: BlocProvider<PersonFavoritesBloc>.value(
+        value: _personFavoritesBloc,
         child: BlocListener<PersonFavoritesBloc, PersonFavoritesState>(
           listener: (context, state) {
             if (state is PersonFavoritesSuccessState) {
@@ -58,16 +58,6 @@ class _PersonPageState extends State<PersonPage> {
                     favorites.any((favorite) => favorite.name == person.name);
               }
               setState(() {});
-            }
-
-            if (state is OnAddPersonFavorite) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Personagem adicionado aos favoritos.')),
-              );
-            } else if (state is OnRemovePersonFavorite) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Personagem removido dos favoritos.')),
-              );
             }
           },
           child: BlocBuilder<PersonBloc, PersonState>(
@@ -97,30 +87,60 @@ class _PersonPageState extends State<PersonPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(person.name),
-                                IconButton(
-                                  onPressed: () async {
-                                    final favoritePerson =
-                                        PersonFavorites(name: person.name);
-                                    if (isFavoriteList[index]) {
-                                      personFavoritesBloc.add(
-                                        OnRemovePersonFavorite(
-                                          personFavorite: favoritePerson,
+                                BlocBuilder<PersonFavoritesBloc,
+                                    PersonFavoritesState>(
+                                  builder: (context, favoritesState) {
+                                    if (favoritesState
+                                        is PersonFavoritesSuccessState) {
+                                      final favorites =
+                                          favoritesState.personagem;
+                                      final isFavorite = favorites.any(
+                                          (favorite) =>
+                                              favorite.name == person.name);
+                                      return IconButton(
+                                        onPressed: () {
+                                          final favoritePerson =
+                                              PersonFavorites(
+                                                  name: person.name);
+                                          if (isFavorite) {
+                                            _personFavoritesBloc.add(
+                                              OnRemovePersonFavorite(
+                                                personFavorite: favoritePerson,
+                                              ),
+                                            );
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    'Personagem removido aos favoritos.'),
+                                              ),
+                                            );
+                                          } else {
+                                            _personFavoritesBloc.add(
+                                              OnAddPersonFavorite(
+                                                personFavorite: favoritePerson,
+                                              ),
+                                            );
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                    'Personagem adicionado dos favoritos.'),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                        icon: Icon(
+                                          Icons.star,
+                                          color: isFavorite
+                                              ? Colors.amber
+                                              : Colors.grey,
                                         ),
                                       );
                                     } else {
-                                      personFavoritesBloc.add(
-                                        OnAddPersonFavorite(
-                                          personFavorite: favoritePerson,
-                                        ),
-                                      );
+                                      return Container();
                                     }
                                   },
-                                  icon: Icon(
-                                    Icons.star,
-                                    color: isFavoriteList[index]
-                                        ? Colors.amber
-                                        : Colors.grey,
-                                  ),
                                 ),
                               ],
                             ),
