@@ -89,6 +89,7 @@ class _PlanetPageState extends State<PlanetPage> {
                                   onPressed: () {
                                     final favoritePlanet = Favorites(
                                       name: planet.name,
+                                      category: 'Planetas',
                                     );
                                     if (isFavorite) {
                                       _favoritesBloc.add(

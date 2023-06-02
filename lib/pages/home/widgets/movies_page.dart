@@ -88,6 +88,7 @@ class _MoviesPageState extends State<MoviesPage> {
                                 IconButton(
                                   onPressed: () {
                                     final favoriteMovie = Favorites(
+                                      category: 'Movies',
                                       name: movie.title,
                                     );
                                     if (isFavorite) {

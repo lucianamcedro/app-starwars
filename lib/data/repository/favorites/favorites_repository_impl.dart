@@ -25,6 +25,7 @@ class PersonFavoritesRepositoryImpl implements FavoritesRepository {
 
     if (index < 0) {
       final favorite = Favorites(
+        category: itemFavorite.category,
         name: itemFavorite.name,
       );
       favorites.add(jsonEncode(favorite.toJson()));

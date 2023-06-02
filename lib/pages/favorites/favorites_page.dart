@@ -7,9 +7,9 @@ class FavoritesPage extends StatefulWidget {
   final String name;
 
   const FavoritesPage({
-    super.key,
+    Key? key,
     required this.name,
-  });
+  }) : super(key: key);
 
   @override
   State<FavoritesPage> createState() => _FavoritesPageState();
@@ -17,6 +17,9 @@ class FavoritesPage extends StatefulWidget {
 
 class _FavoritesPageState extends State<FavoritesPage> {
   late FavoritesBloc favoritesBloc;
+  List<Favorites> moviesFavorites = [];
+  List<Favorites> planetsFavorites = [];
+  List<Favorites> charactersFavorites = [];
 
   @override
   void initState() {
@@ -28,80 +31,119 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          title: const Text(
-            'Favoritos',
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-          centerTitle: false,
-          iconTheme: IconThemeData(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: const Text(
+          'Favoritos',
+          style: TextStyle(
             color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
         ),
-        body: Builder(
-          builder: (context) {
-            return BlocBuilder<FavoritesBloc, FavoritesState>(
-              bloc: favoritesBloc,
-              builder: (context, state) {
-                if (state is FavoritesSuccessState) {
-                  final favorites = state.favorite;
+        centerTitle: false,
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+      ),
+      body: Builder(
+        builder: (context) {
+          return BlocBuilder<FavoritesBloc, FavoritesState>(
+            bloc: favoritesBloc,
+            builder: (context, state) {
+              if (state is FavoritesSuccessState) {
+                final favorites = state.favorite;
 
-                  if (favorites.isEmpty) {
-                    return Center(
-                      child: Text('Nenhum favorito.'),
-                    );
-                  }
-
-                  return ListView.builder(
-                    itemCount: favorites.length,
-                    itemBuilder: (context, index) {
-                      final favoriteItem = favorites[index];
-
-                      return ListTile(
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(favoriteItem.name),
-                            IconButton(
-                              onPressed: () {
-                                favoritesBloc.add(
-                                  OnRemoveFavorite(favorite: favoriteItem),
-                                );
-                                ScaffoldMessenger.of(context)
-                                    .hideCurrentSnackBar();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Removido dos favoritos',
-                                    ),
-                                  ),
-                                );
-                              },
-                              icon: Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                              ),
-                            ),
-                          ],
-                        ),
-                        subtitle: Text(favoriteItem.name),
-                      );
-                    },
-                  );
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
+                if (favorites.isEmpty) {
+                  return Center(
+                    child: Text('Nenhum favorito.'),
                   );
                 }
-              },
+
+                moviesFavorites = favorites
+                    .where((favorite) => favorite.category == 'Movies')
+                    .toList();
+                planetsFavorites = favorites
+                    .where((favorite) => favorite.category == 'Planetas')
+                    .toList();
+                charactersFavorites = favorites
+                    .where((favorite) => favorite.category == 'Personagens')
+                    .toList();
+
+                return SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  physics: BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      if (moviesFavorites.isNotEmpty)
+                        _buildCategoryList('Filmes', moviesFavorites),
+                      if (planetsFavorites.isNotEmpty)
+                        _buildCategoryList('Planetas', planetsFavorites),
+                      if (charactersFavorites.isNotEmpty)
+                        _buildCategoryList('Personagens', charactersFavorites),
+                    ],
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildCategoryList(String categoryTitle, List<Favorites> favorites) {
+    return Column(
+      children: [
+        Text(
+          categoryTitle,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        ListView.builder(
+          shrinkWrap: true,
+          itemCount: favorites.length,
+          itemBuilder: (context, index) {
+            final favoriteItem = favorites[index];
+            return ListTile(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(favoriteItem.name),
+                  IconButton(
+                    onPressed: () {
+                      favoritesBloc.add(
+                        OnRemoveFavorite(favorite: favoriteItem),
+                      );
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Removido dos favoritos'),
+                        ),
+                      );
+                    },
+                    icon: Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                  ),
+                ],
+              ),
+              subtitle: Text(favoriteItem.category),
             );
           },
-        ));
+        ),
+      ],
+    );
   }
 }

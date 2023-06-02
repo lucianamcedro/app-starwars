@@ -89,6 +89,7 @@ class _PersonPageState extends State<PersonPage> {
                                   onPressed: () {
                                     final favoritePerson = Favorites(
                                       name: person.name,
+                                      category: 'Personagens',
                                     );
                                     if (isFavorite) {
                                       _favoritesBloc.add(
