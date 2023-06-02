@@ -52,13 +52,13 @@ class Planet {
   factory Planet.fromMap(Map<String, dynamic> map) {
     return Planet(
       name: map['name'] ?? "",
-      rotationPeriod: map['rotationPeriod'] ?? "",
-      orbitalPeriod: map['orbitalPeriod'] ?? "",
+      rotationPeriod: map['rotation_period'] ?? "",
+      orbitalPeriod: map['orbital_period'] ?? "",
       diameter: map['diameter'] ?? "",
       climate: map['climate'] ?? "",
       gravity: map['gravity'] ?? "",
       terrain: map['terrain'] ?? "",
-      surfaceWater: map['surfaceWater'] ?? "",
+      surfaceWater: map['surface_water'] ?? "",
       population: map['population'] ?? "",
       films: List<String>.from(map['films'] ?? []),
       created: map['created'] ?? "",
@@ -70,13 +70,13 @@ class Planet {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'rotationPeriod': rotationPeriod,
-      'orbitalPeriod': orbitalPeriod,
+      'rotation_period': rotationPeriod,
+      'orbital_period': orbitalPeriod,
       'diameter': diameter,
       'climate': climate,
       'gravity': gravity,
       'terrain': terrain,
-      'surfaceWater': surfaceWater,
+      'surface_water': surfaceWater,
       'population': population,
       'films': films,
       'created': created,
