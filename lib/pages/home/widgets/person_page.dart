@@ -1,3 +1,5 @@
+import 'package:desafio_starwars_flutter/domain/models/person_favorites_model.dart';
+import 'package:desafio_starwars_flutter/domain/models/person_model.dart';
 import 'package:desafio_starwars_flutter/pages/bloc/bloc.dart';
 import 'package:desafio_starwars_flutter/pages/detail/person_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +16,8 @@ class PersonPage extends StatefulWidget {
 class _PersonPageState extends State<PersonPage> {
   late PersonBloc _personBloc;
   late PersonFavoritesBloc personFavoritesBloc;
-  bool isFavorite = false;
+  List<bool> isFavoriteList = [];
+  List<Person> people = [];
 
   @override
   void initState() {
@@ -46,7 +49,16 @@ class _PersonPageState extends State<PersonPage> {
         create: (context) => personFavoritesBloc,
         child: BlocListener<PersonFavoritesBloc, PersonFavoritesState>(
           listener: (context, state) {
-            if (state is PersonFavoritesSuccessState) {}
+            if (state is PersonFavoritesSuccessState) {
+              final favorites = state.personagem;
+              isFavoriteList = List<bool>.filled(people.length, false);
+              for (var i = 0; i < people.length; i++) {
+                final person = people[i];
+                isFavoriteList[i] =
+                    favorites.any((favorite) => favorite.name == person.name);
+              }
+              setState(() {});
+            }
 
             if (state is OnAddPersonFavorite) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -62,7 +74,8 @@ class _PersonPageState extends State<PersonPage> {
             bloc: _personBloc,
             builder: (context, state) {
               if (state is PersonSuccessState) {
-                final people = state.person;
+                people = state.person;
+                isFavoriteList = List<bool>.filled(people.length, false);
                 return ListView.builder(
                   itemCount: people.length,
                   itemBuilder: (context, index) {
@@ -83,16 +96,32 @@ class _PersonPageState extends State<PersonPage> {
                             title: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  person.name,
-                                ),
+                                Text(person.name),
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    final favoritePerson =
+                                        PersonFavorites(name: person.name);
+                                    if (isFavoriteList[index]) {
+                                      personFavoritesBloc.add(
+                                        OnRemovePersonFavorite(
+                                          personFavorite: favoritePerson,
+                                        ),
+                                      );
+                                    } else {
+                                      personFavoritesBloc.add(
+                                        OnAddPersonFavorite(
+                                          personFavorite: favoritePerson,
+                                        ),
+                                      );
+                                    }
+                                  },
                                   icon: Icon(
                                     Icons.star,
-                                    color: isFavorite ? Colors.amber : null,
+                                    color: isFavoriteList[index]
+                                        ? Colors.amber
+                                        : Colors.grey,
                                   ),
-                                )
+                                ),
                               ],
                             ),
                             subtitle: Text(person.birthYear),

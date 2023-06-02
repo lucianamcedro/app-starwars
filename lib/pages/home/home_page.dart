@@ -1,6 +1,6 @@
 import 'package:desafio_starwars_flutter/pages/home/widgets/movies_page.dart';
-import 'package:desafio_starwars_flutter/pages/home/widgets/person_page.dart';
 import 'package:desafio_starwars_flutter/pages/home/widgets/planet_page.dart';
+import 'package:desafio_starwars_flutter/pages/pages.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -116,6 +116,44 @@ class HomePage extends StatelessWidget {
                           ),
                           Text(
                             "Filmes",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Card(
+                  elevation: 8,
+                  color: Colors.grey[700],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 15.0,
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => PersonFavoritesPage(
+                            name: '',
+                          ),
+                        ));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(
+                            Icons.heart_broken,
+                            color: Colors.white,
+                            size: 50,
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                            "Favoritos",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 30,

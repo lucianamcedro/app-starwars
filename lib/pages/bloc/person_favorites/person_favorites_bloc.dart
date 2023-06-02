@@ -16,31 +16,41 @@ class PersonFavoritesBloc
       if (event is OnLoadPersonFavorites) {
         try {
           final favorites = await personFavoritesUsecase.getFavoritePerson();
-
-          emit(PersonFavoritesSuccessState(personagem: favorites));
+          emit(PersonFavoritesSuccessState(personagem: favorites.toList()));
         } on DioError catch (error) {
           emit(PersonFavoritesErrorState(error: error.message!));
         }
       }
       if (event is OnAddPersonFavorite) {
         try {
-          await personFavoritesUsecase.addPersonFavorite(event.personFavorite);
-
           final favorites = await personFavoritesUsecase.getFavoritePerson();
-
-          emit(PersonFavoritesSuccessState(personagem: favorites));
+          final index = favorites.indexWhere(
+            (favorite) => favorite.name == event.personFavorite.name,
+          );
+          if (index >= 0) {
+            favorites.removeAt(index);
+            await personFavoritesUsecase.setFavoritePerson(favorites);
+            emit(PersonFavoritesSuccessState(personagem: favorites.toList()));
+          } else {
+            favorites.add(event.personFavorite);
+            await personFavoritesUsecase.setFavoritePerson(favorites);
+            emit(PersonFavoritesSuccessState(personagem: favorites.toList()));
+          }
         } on DioError catch (error) {
           emit(PersonFavoritesErrorState(error: error.message!));
         }
       }
       if (event is OnRemovePersonFavorite) {
         try {
-          await personFavoritesUsecase
-              .removePersonFavorite(event.personFavorite);
-
           final favorites = await personFavoritesUsecase.getFavoritePerson();
-
-          emit(PersonFavoritesSuccessState(personagem: favorites));
+          final index = favorites.indexWhere(
+            (favorite) => favorite.name == event.personFavorite.name,
+          );
+          if (index >= 0) {
+            favorites.removeAt(index);
+            await personFavoritesUsecase.setFavoritePerson(favorites);
+            emit(PersonFavoritesSuccessState(personagem: favorites.toList()));
+          }
         } on DioError catch (error) {
           emit(PersonFavoritesErrorState(error: error.message!));
         }
