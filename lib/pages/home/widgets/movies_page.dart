@@ -12,12 +12,18 @@ class MoviesPage extends StatefulWidget {
 
 class _MoviesPageState extends State<MoviesPage> {
   late MoviesBloc _moviesBloc;
+  late FavoritesBloc _favoritesBloc;
+  List<bool> isFavoriteList = [];
+  List<Movies> movies = [];
 
   @override
   void initState() {
     super.initState();
     _moviesBloc = GetIt.I.get<MoviesBloc>();
     _moviesBloc.add(OnLoadMovies());
+
+    _favoritesBloc = GetIt.I.get<FavoritesBloc>();
+    _favoritesBloc.add(OnLoadFavorites());
   }
 
   @override
@@ -43,30 +49,95 @@ class _MoviesPageState extends State<MoviesPage> {
         bloc: _moviesBloc,
         builder: (context, state) {
           if (state is MoviesSuccessState) {
-            final movies = state.movies;
-            return ListView.builder(
-              itemCount: movies.length,
-              itemBuilder: (context, index) {
-                final movie = movies[index];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Card(
-                    elevation: 5,
-                    child: InkWell(
-                      onTap: () {
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //   builder: (context) =>
-                        //       MovieDetailScreen(movie: movie),
-                        // ));
-                      },
-                      child: ListTile(
-                        title: Text(
-                          movie.title,
+            movies = state.movies;
+            return BlocBuilder<FavoritesBloc, FavoritesState>(
+              bloc: _favoritesBloc,
+              builder: (context, favoritesState) {
+                if (favoritesState is FavoritesSuccessState) {
+                  final favorites = favoritesState.favorite;
+                  isFavoriteList = List<bool>.filled(movies.length, false);
+                  for (var i = 0; i < movies.length; i++) {
+                    final movie = movies[i];
+                    isFavoriteList[i] = favorites
+                        .any((favorite) => favorite.name == movie.title);
+                  }
+                }
+
+                return ListView.builder(
+                  itemCount: movies.length,
+                  itemBuilder: (context, index) {
+                    final movie = movies[index];
+                    final isFavorite = isFavoriteList[index];
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Card(
+                        elevation: 5,
+                        child: InkWell(
+                          onTap: () {
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //   builder: (context) =>
+                            //       MovieDetailScreen(movie: movie),
+                            // ));
+                          },
+                          child: ListTile(
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(movie.title),
+                                IconButton(
+                                  onPressed: () {
+                                    final favoriteMovie = Favorites(
+                                      name: movie.title,
+                                    );
+                                    if (isFavorite) {
+                                      _favoritesBloc.add(
+                                        OnRemoveFavorite(
+                                          favorite: favoriteMovie,
+                                        ),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .hideCurrentSnackBar();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Filme removido dos favoritos.',
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      _favoritesBloc.add(
+                                        OnAddFavorite(
+                                          favorite: favoriteMovie,
+                                        ),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .hideCurrentSnackBar();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Filme adicionado aos favoritos.',
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  icon: Icon(
+                                    Icons.star,
+                                    color:
+                                        isFavorite ? Colors.amber : Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            subtitle: Text(movie.producer),
+                          ),
                         ),
-                        subtitle: Text(movie.producer),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 );
               },
             );
