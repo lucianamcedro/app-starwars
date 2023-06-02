@@ -9,7 +9,20 @@ class PersonDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(person.name),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: const Text(
+          'Detalhes',
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+        centerTitle: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

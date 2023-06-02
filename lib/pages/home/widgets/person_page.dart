@@ -40,6 +40,9 @@ class _PersonPageState extends State<PersonPage> {
             fontSize: 20,
           ),
         ),
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
         centerTitle: false,
       ),
       body: BlocBuilder<PersonBloc, PersonState>(

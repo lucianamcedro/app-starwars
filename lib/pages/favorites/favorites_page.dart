@@ -29,7 +29,20 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Favoritos'),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          title: const Text(
+            'Favoritos',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          centerTitle: false,
+          iconTheme: IconThemeData(
+            color: Colors.black,
+          ),
         ),
         body: Builder(
           builder: (context) {
@@ -52,7 +65,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
                       return ListTile(
                         title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            Text(favoriteItem.name),
                             IconButton(
                               onPressed: () {
                                 favoritesBloc.add(
@@ -73,7 +88,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                 color: Colors.amber,
                               ),
                             ),
-                            Text(favoriteItem.name),
                           ],
                         ),
                         subtitle: Text(favoriteItem.name),

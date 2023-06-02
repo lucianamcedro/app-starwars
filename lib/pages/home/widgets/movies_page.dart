@@ -34,6 +34,9 @@ class _MoviesPageState extends State<MoviesPage> {
             fontSize: 20,
           ),
         ),
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
         centerTitle: false,
       ),
       body: BlocBuilder<MoviesBloc, MoviesState>(

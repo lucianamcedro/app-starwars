@@ -34,6 +34,9 @@ class _PlanetPageState extends State<PlanetPage> {
             fontSize: 20,
           ),
         ),
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
         centerTitle: false,
       ),
       body: BlocBuilder<PlanetBloc, PlanetState>(
