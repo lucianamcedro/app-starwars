@@ -19,15 +19,24 @@ class PersonRepositoryImpl implements PersonRepository {
       return personMapsList;
     } else {
       try {
-        dynamic result;
-        result = await Dio().get(ApiConsts.baseUrlPerson);
-        final dados = result.data['results'] as List;
-        final personMapsList = dados.map((e) => Person.fromMap(e)).toList();
+        List<Person> allPersons = [];
 
-        final cachedData = jsonEncode(personMapsList);
+        for (int i = 1; i <= 82; i++) {
+          try {
+            final response = await Dio().get('${ApiConsts.baseUrlPerson}/$i');
+            final data = response.data;
+
+            final person = Person.fromMap(data);
+            allPersons.add(person);
+          } catch (e) {
+            log('Erro ao buscar dados do personagem $i', error: e);
+          }
+        }
+
+        final cachedData = jsonEncode(allPersons);
         await prefs.setString(cacheKey, cachedData);
 
-        return personMapsList;
+        return allPersons;
       } on DioError catch (e) {
         log('Erro ao buscar dados', error: e);
         throw Exception('Erro ao buscar dados');

@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:desafio_starwars_flutter/starwars.dart';
 import 'package:dio/dio.dart';
+import 'package:desafio_starwars_flutter/starwars.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MoviesRepositoryImpl implements MoviesRepository {
@@ -17,11 +17,11 @@ class MoviesRepositoryImpl implements MoviesRepository {
       try {
         final decodedData = jsonDecode(cachedData);
         if (decodedData is List) {
-          final moviesMapsList = decodedData
+          final moviesList = decodedData
               .map((e) => Movies.fromMap(Map<String, dynamic>.from(e)))
               .toList();
 
-          return moviesMapsList;
+          return moviesList;
         }
       } catch (e) {
         log('Erro ao decodificar dados do cache', error: e);
@@ -31,12 +31,13 @@ class MoviesRepositoryImpl implements MoviesRepository {
     try {
       final result = await Dio().get(ApiConsts.baseUrlMovies);
       final dados = result.data['results'] as List;
-      final moviesMapsList = dados.map((e) => Movies.fromMap(e)).toList();
+      final moviesList = dados.map((e) => Movies.fromMap(e)).toList();
 
-      final cachedData = jsonEncode(moviesMapsList);
+      final cachedData =
+          jsonEncode(moviesList.map((movie) => movie.toMap()).toList());
       await prefs.setString(cacheKey, cachedData);
 
-      return moviesMapsList;
+      return moviesList;
     } on DioError catch (e) {
       log('Erro ao buscar dados', error: e);
       throw Exception('Erro ao buscar dados');

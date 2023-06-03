@@ -28,14 +28,26 @@ class PlanetRepositoryImpl implements PlanetRepository {
     }
 
     try {
-      final result = await Dio().get(ApiConsts.baseUrlPlanets);
-      final dados = result.data['results'] as List;
-      final planetMapsList = dados.map((e) => Planet.fromMap(e)).toList();
+      final List<Planet> allPlanets = [];
 
+      for (int i = 1; i <= 60; i++) {
+        try {
+          final response = await Dio().get('${ApiConsts.baseUrlPlanets}/$i');
+          final data = response.data;
+
+          final planet = Planet.fromMap(data);
+          allPlanets.add(planet);
+        } catch (e) {
+          log('Erro ao buscar dados do planeta $i', error: e);
+        }
+      }
+
+      final planetMapsList =
+          allPlanets.map((planet) => planet.toMap()).toList();
       final cachedData = jsonEncode(planetMapsList);
       await prefs.setString(cacheKey, cachedData);
 
-      return planetMapsList;
+      return allPlanets;
     } on DioError catch (e) {
       log('Erro ao buscar dados', error: e);
       throw Exception('Erro ao buscar dados');

@@ -99,6 +99,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
         ),
         ListView.builder(
           shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
           itemCount: favorites.length,
           itemBuilder: (context, index) {
             final favoriteItem = favorites[index];
