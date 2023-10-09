@@ -1,24 +1,21 @@
 import 'package:desafio_starwars_flutter/starwars.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart' as bloc;
 
-part 'movies_event.dart';
 part 'movies_state.dart';
 
-class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
+class MoviesCubit extends bloc.Cubit<MoviesState> {
   final MoviesUsecase moviesUsecase;
 
-  MoviesBloc({required this.moviesUsecase}) : super(MoviesInitialState()) {
-    on<MoviesEvent>((event, emit) async {
-      if (event is OnLoadMovies) {
-        try {
-          final movies = await moviesUsecase.getMovies();
+  MoviesCubit({required this.moviesUsecase}) : super(MoviesInitialState());
 
-          emit(MoviesSuccessState(movies: movies));
-        } on DioError catch (error) {
-          emit(MoviesErrorState(error: error.message!));
-        }
-      }
-    });
+  Future<void> loadMovies() async {
+    emit(MoviesLoadingState());
+    try {
+      final movies = await moviesUsecase.getMovies();
+      emit(MoviesSuccessState(movies: movies));
+    } on DioError catch (error) {
+      emit(MoviesErrorState(error: error.message!));
+    }
   }
 }

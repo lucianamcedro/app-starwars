@@ -48,24 +48,24 @@ class DependencyInjection {
     );
 
     // BLOC
-    getIt.registerFactory<PersonBloc>(
-      () => PersonBloc(
+    getIt.registerFactory<PersonCubit>(
+      () => PersonCubit(
         personsUsecase: getIt<PersonsUsecase>(),
       ),
     );
-    getIt.registerFactory<MoviesBloc>(
-      () => MoviesBloc(
+    getIt.registerFactory<MoviesCubit>(
+      () => MoviesCubit(
         moviesUsecase: getIt<MoviesUsecase>(),
       ),
     );
-    getIt.registerFactory<PlanetBloc>(
-      () => PlanetBloc(
+    getIt.registerFactory<PlanetCubit>(
+      () => PlanetCubit(
         planetUsecase: getIt<PlanetUsecase>(),
       ),
     );
 
-    getIt.registerFactory<FavoritesBloc>(
-      () => FavoritesBloc(
+    getIt.registerFactory<FavoritesCubit>(
+      () => FavoritesCubit(
         favoritesUsecase: getIt<FavoritesUsecase>(),
       ),
     );

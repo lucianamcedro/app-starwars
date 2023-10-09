@@ -11,19 +11,19 @@ class PlanetPage extends StatefulWidget {
 }
 
 class _PlanetPageState extends State<PlanetPage> {
-  late PlanetBloc _planetBloc;
-  late FavoritesBloc _favoritesBloc;
+  late PlanetCubit _planetBloc;
+  late FavoritesCubit favoritesCubit;
   List<bool> isFavoriteList = [];
   List<Planet> planets = [];
 
   @override
   void initState() {
     super.initState();
-    _planetBloc = GetIt.I.get<PlanetBloc>();
-    _planetBloc.add(OnLoadPlanet());
+    _planetBloc = GetIt.I.get<PlanetCubit>();
+    _planetBloc.loadPlanet();
 
-    _favoritesBloc = GetIt.I.get<FavoritesBloc>();
-    _favoritesBloc.add(OnLoadFavorites());
+    favoritesCubit = GetIt.I.get<FavoritesCubit>();
+    favoritesCubit.loadFavorites();
   }
 
   @override
@@ -32,13 +32,13 @@ class _PlanetPageState extends State<PlanetPage> {
       appBar: AppBarStar(
         title: 'Planetas',
       ),
-      body: BlocBuilder<PlanetBloc, PlanetState>(
+      body: BlocBuilder<PlanetCubit, PlanetState>(
         bloc: _planetBloc,
         builder: (context, state) {
           if (state is PlanetSuccessState) {
             planets = state.planet;
-            return BlocBuilder<FavoritesBloc, FavoritesState>(
-              bloc: _favoritesBloc,
+            return BlocBuilder<FavoritesCubit, FavoritesState>(
+              bloc: favoritesCubit,
               builder: (context, favoritesState) {
                 if (favoritesState is FavoritesSuccessState) {
                   final favorites = favoritesState.favorite;
@@ -79,11 +79,8 @@ class _PlanetPageState extends State<PlanetPage> {
                                       category: 'Planetas',
                                     );
                                     if (isFavorite) {
-                                      _favoritesBloc.add(
-                                        OnRemoveFavorite(
-                                          favorite: favoritePlanet,
-                                        ),
-                                      );
+                                      favoritesCubit
+                                          .removeFavorite(favoritePlanet);
                                       ScaffoldMessenger.of(context)
                                           .hideCurrentSnackBar();
                                       ScaffoldMessenger.of(context)
@@ -95,11 +92,8 @@ class _PlanetPageState extends State<PlanetPage> {
                                         ),
                                       );
                                     } else {
-                                      _favoritesBloc.add(
-                                        OnAddFavorite(
-                                          favorite: favoritePlanet,
-                                        ),
-                                      );
+                                      favoritesCubit
+                                          .addFavorite(favoritePlanet);
                                       ScaffoldMessenger.of(context)
                                           .hideCurrentSnackBar();
                                       ScaffoldMessenger.of(context)

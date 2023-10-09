@@ -22,18 +22,18 @@ class LoginPage extends StatelessWidget {
               horizontal: 20,
               vertical: 50,
             ),
-            child: Column(
-              children: [
-                Image.asset(
-                  'assets/images/logo.png',
-                  width: 200,
-                  height: 200,
-                ),
-                const SizedBox(
-                  height: 100,
-                ),
-                Flexible(
-                  child: Container(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Image.asset(
+                    'assets/images/logo.png',
+                    width: 200,
+                    height: 200,
+                  ),
+                  SizedBox(
+                    height: size.height * .25,
+                  ),
+                  Container(
                     height: 56.0,
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     decoration: BoxDecoration(
@@ -47,10 +47,8 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: 10.0),
-                Flexible(
-                  child: Container(
+                  SizedBox(height: 10.0),
+                  Container(
                     height: 56.0,
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     decoration: BoxDecoration(
@@ -65,12 +63,12 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ButtonsLogin(),
-              ],
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ButtonsLogin(),
+                ],
+              ),
             ),
           )
         ],

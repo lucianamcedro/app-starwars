@@ -11,19 +11,19 @@ class MoviesPage extends StatefulWidget {
 }
 
 class _MoviesPageState extends State<MoviesPage> {
-  late MoviesBloc _moviesBloc;
-  late FavoritesBloc _favoritesBloc;
+  late MoviesCubit _moviesBloc;
+  late FavoritesCubit favoritesCubit;
   List<bool> isFavoriteList = [];
   List<Movies> movies = [];
 
   @override
   void initState() {
     super.initState();
-    _moviesBloc = GetIt.I.get<MoviesBloc>();
-    _moviesBloc.add(OnLoadMovies());
+    _moviesBloc = GetIt.I.get<MoviesCubit>();
+    _moviesBloc.loadMovies();
 
-    _favoritesBloc = GetIt.I.get<FavoritesBloc>();
-    _favoritesBloc.add(OnLoadFavorites());
+    favoritesCubit = GetIt.I.get<FavoritesCubit>();
+    favoritesCubit.loadFavorites();
   }
 
   @override
@@ -32,13 +32,13 @@ class _MoviesPageState extends State<MoviesPage> {
       appBar: AppBarStar(
         title: 'Filmes',
       ),
-      body: BlocBuilder<MoviesBloc, MoviesState>(
+      body: BlocBuilder<MoviesCubit, MoviesState>(
         bloc: _moviesBloc,
         builder: (context, state) {
           if (state is MoviesSuccessState) {
             movies = state.movies;
-            return BlocBuilder<FavoritesBloc, FavoritesState>(
-              bloc: _favoritesBloc,
+            return BlocBuilder<FavoritesCubit, FavoritesState>(
+              bloc: favoritesCubit,
               builder: (context, favoritesState) {
                 if (favoritesState is FavoritesSuccessState) {
                   final favorites = favoritesState.favorite;
@@ -79,10 +79,8 @@ class _MoviesPageState extends State<MoviesPage> {
                                       name: movie.title,
                                     );
                                     if (isFavorite) {
-                                      _favoritesBloc.add(
-                                        OnRemoveFavorite(
-                                          favorite: favoriteMovie,
-                                        ),
+                                      favoritesCubit.removeFavorite(
+                                        favoriteMovie,
                                       );
                                       ScaffoldMessenger.of(context)
                                           .hideCurrentSnackBar();
@@ -95,10 +93,8 @@ class _MoviesPageState extends State<MoviesPage> {
                                         ),
                                       );
                                     } else {
-                                      _favoritesBloc.add(
-                                        OnAddFavorite(
-                                          favorite: favoriteMovie,
-                                        ),
+                                      favoritesCubit.addFavorite(
+                                        favoriteMovie,
                                       );
                                       ScaffoldMessenger.of(context)
                                           .hideCurrentSnackBar();

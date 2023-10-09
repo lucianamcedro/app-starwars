@@ -4,26 +4,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 class PersonPage extends StatefulWidget {
-  const PersonPage({super.key});
+  const PersonPage({Key? key}) : super(key: key);
 
   @override
   State<PersonPage> createState() => _PersonPageState();
 }
 
 class _PersonPageState extends State<PersonPage> {
-  late PersonBloc _personBloc;
-  late FavoritesBloc _favoritesBloc;
-  List<bool> isFavoriteList = [];
-  List<Person> people = [];
+  late PersonCubit _personBloc;
+  late FavoritesCubit _favoritesCubit;
+  List<bool> _isFavoriteList = [];
+  List<Person> _people = [];
 
   @override
   void initState() {
     super.initState();
-    _personBloc = GetIt.I.get<PersonBloc>();
-    _personBloc.add(OnLoadPerson());
+    _personBloc = GetIt.I.get<PersonCubit>();
+    _personBloc.loadPerson();
 
-    _favoritesBloc = GetIt.I.get<FavoritesBloc>();
-    _favoritesBloc.add(OnLoadFavorites());
+    _favoritesCubit = GetIt.I.get<FavoritesCubit>();
+    _favoritesCubit.loadFavorites();
   }
 
   @override
@@ -32,29 +32,29 @@ class _PersonPageState extends State<PersonPage> {
       appBar: AppBarStar(
         title: 'Personagens',
       ),
-      body: BlocBuilder<PersonBloc, PersonState>(
+      body: BlocBuilder<PersonCubit, PersonState>(
         bloc: _personBloc,
         builder: (context, state) {
           if (state is PersonSuccessState) {
-            people = state.person;
-            return BlocBuilder<FavoritesBloc, FavoritesState>(
-              bloc: _favoritesBloc,
+            _people = state.person;
+            return BlocBuilder<FavoritesCubit, FavoritesState>(
+              bloc: _favoritesCubit,
               builder: (context, favoritesState) {
                 if (favoritesState is FavoritesSuccessState) {
                   final favorites = favoritesState.favorite;
-                  isFavoriteList = List<bool>.filled(people.length, false);
-                  for (var i = 0; i < people.length; i++) {
-                    final person = people[i];
-                    isFavoriteList[i] = favorites
+                  _isFavoriteList = List<bool>.filled(_people.length, false);
+                  for (var i = 0; i < _people.length; i++) {
+                    final person = _people[i];
+                    _isFavoriteList[i] = favorites
                         .any((favorite) => favorite.name == person.name);
                   }
                 }
 
                 return ListView.builder(
-                  itemCount: people.length,
+                  itemCount: _people.length,
                   itemBuilder: (context, index) {
-                    final person = people[index];
-                    final isFavorite = isFavoriteList[index];
+                    final person = _people[index];
+                    final isFavorite = _isFavoriteList[index];
 
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -79,10 +79,8 @@ class _PersonPageState extends State<PersonPage> {
                                       category: 'Personagens',
                                     );
                                     if (isFavorite) {
-                                      _favoritesBloc.add(
-                                        OnRemoveFavorite(
-                                          favorite: favoritePerson,
-                                        ),
+                                      _favoritesCubit.removeFavorite(
+                                        favoritePerson,
                                       );
                                       ScaffoldMessenger.of(context)
                                           .hideCurrentSnackBar();
@@ -95,10 +93,8 @@ class _PersonPageState extends State<PersonPage> {
                                         ),
                                       );
                                     } else {
-                                      _favoritesBloc.add(
-                                        OnAddFavorite(
-                                          favorite: favoritePerson,
-                                        ),
+                                      _favoritesCubit.addFavorite(
+                                        favoritePerson,
                                       );
                                       ScaffoldMessenger.of(context)
                                           .hideCurrentSnackBar();

@@ -16,7 +16,7 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
-  late FavoritesBloc favoritesBloc;
+  late FavoritesCubit favoritesCubit;
   List<Favorites> moviesFavorites = [];
   List<Favorites> planetsFavorites = [];
   List<Favorites> charactersFavorites = [];
@@ -24,8 +24,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   void initState() {
     super.initState();
-    favoritesBloc = GetIt.I.get<FavoritesBloc>();
-    favoritesBloc.add(OnLoadFavorites());
+    favoritesCubit = GetIt.I.get<FavoritesCubit>();
+    favoritesCubit.loadFavorites();
   }
 
   @override
@@ -36,8 +36,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
       ),
       body: Builder(
         builder: (context) {
-          return BlocBuilder<FavoritesBloc, FavoritesState>(
-            bloc: favoritesBloc,
+          return BlocBuilder<FavoritesCubit, FavoritesState>(
+            bloc: favoritesCubit,
             builder: (context, state) {
               if (state is FavoritesSuccessState) {
                 final favorites = state.favorite;
@@ -110,9 +110,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   Text(favoriteItem.name),
                   IconButton(
                     onPressed: () {
-                      favoritesBloc.add(
-                        OnRemoveFavorite(favorite: favoriteItem),
-                      );
+                      favoritesCubit.removeFavorite(favoriteItem);
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
