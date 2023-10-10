@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 class MoviesPage extends StatefulWidget {
-  const MoviesPage({Key? key}) : super(key: key);
+  const MoviesPage({super.key});
 
   @override
   State<MoviesPage> createState() => _MoviesPageState();

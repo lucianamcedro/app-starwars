@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 class PlanetPage extends StatefulWidget {
-  const PlanetPage({Key? key}) : super(key: key);
+  const PlanetPage({super.key});
 
   @override
   State<PlanetPage> createState() => _PlanetPageState();

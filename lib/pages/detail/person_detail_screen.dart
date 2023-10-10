@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class PersonDetailScreen extends StatelessWidget {
   final Person person;
-  const PersonDetailScreen({Key? key, required this.person}) : super(key: key);
+  const PersonDetailScreen({super.key, required this.person});
 
   @override
   Widget build(BuildContext context) {

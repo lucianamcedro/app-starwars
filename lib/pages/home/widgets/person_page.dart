@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 class PersonPage extends StatefulWidget {
-  const PersonPage({Key? key}) : super(key: key);
+  const PersonPage({super.key});
 
   @override
   State<PersonPage> createState() => _PersonPageState();
