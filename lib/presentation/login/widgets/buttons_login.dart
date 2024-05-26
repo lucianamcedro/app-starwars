@@ -1,4 +1,4 @@
-import 'package:desafio_starwars_flutter/pages/home/home.dart';
+import 'package:desafio_starwars_flutter/presentation/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 

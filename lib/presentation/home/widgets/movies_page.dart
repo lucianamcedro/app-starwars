@@ -1,3 +1,4 @@
+import 'package:desafio_starwars_flutter/presentation/detail/movie_details_screen.dart';
 import 'package:desafio_starwars_flutter/starwars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,10 +63,10 @@ class _MoviesPageState extends State<MoviesPage> {
                         elevation: 5,
                         child: InkWell(
                           onTap: () {
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //   builder: (context) =>
-                            //       MovieDetailScreen(movie: movie),
-                            // ));
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  MovieDetailsScreen(movies: movie),
+                            ));
                           },
                           child: ListTile(
                             title: Row(
@@ -125,7 +126,8 @@ class _MoviesPageState extends State<MoviesPage> {
                 );
               },
             );
-          } else if (state is MoviesErrorState) {
+          }
+          if (state is MoviesErrorState) {
             return Center(
               child: Text(state.error),
             );

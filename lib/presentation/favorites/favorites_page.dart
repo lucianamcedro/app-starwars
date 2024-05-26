@@ -39,12 +39,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
               if (state is FavoritesSuccessState) {
                 final favorites = state.favorite;
 
-                if (favorites.isEmpty) {
-                  return Center(
-                    child: Text('Nenhum favorito.'),
-                  );
-                }
-
                 moviesFavorites = favorites
                     .where((favorite) => favorite.category == 'Movies')
                     .toList();
@@ -55,6 +49,12 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     .where((favorite) => favorite.category == 'Personagens')
                     .toList();
 
+                if (favorites.isEmpty) {
+                  return Center(
+                    child: Text('Nenhum favorito.'),
+                  );
+                }
+
                 return SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   physics: BouncingScrollPhysics(),
@@ -63,12 +63,15 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       const SizedBox(
                         height: 30,
                       ),
-                      if (moviesFavorites.isNotEmpty)
+                      if (moviesFavorites.isNotEmpty) ...[
                         _buildCategoryList('Filmes', moviesFavorites),
-                      if (planetsFavorites.isNotEmpty)
+                      ],
+                      if (planetsFavorites.isNotEmpty) ...[
                         _buildCategoryList('Planetas', planetsFavorites),
-                      if (charactersFavorites.isNotEmpty)
+                      ],
+                      if (charactersFavorites.isNotEmpty) ...[
                         _buildCategoryList('Personagens', charactersFavorites),
+                      ],
                     ],
                   ),
                 );
@@ -122,7 +125,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   ),
                 ],
               ),
-              subtitle: Text(favoriteItem.category),
             );
           },
         ),

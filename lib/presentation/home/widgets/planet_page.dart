@@ -1,60 +1,61 @@
+import 'package:desafio_starwars_flutter/presentation/detail/planet_details_Screen.dart';
 import 'package:desafio_starwars_flutter/starwars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
-class PersonPage extends StatefulWidget {
-  const PersonPage({super.key});
+class PlanetPage extends StatefulWidget {
+  const PlanetPage({super.key});
 
   @override
-  State<PersonPage> createState() => _PersonPageState();
+  State<PlanetPage> createState() => _PlanetPageState();
 }
 
-class _PersonPageState extends State<PersonPage> {
-  late PersonCubit _personBloc;
-  late FavoritesCubit _favoritesCubit;
-  List<bool> _isFavoriteList = [];
-  List<Person> _people = [];
+class _PlanetPageState extends State<PlanetPage> {
+  late PlanetCubit _planetBloc;
+  late FavoritesCubit favoritesCubit;
+  List<bool> isFavoriteList = [];
+  List<Planet> planets = [];
 
   @override
   void initState() {
     super.initState();
-    _personBloc = GetIt.I.get<PersonCubit>();
-    _personBloc.loadPerson();
+    _planetBloc = GetIt.I.get<PlanetCubit>();
+    _planetBloc.loadPlanet();
 
-    _favoritesCubit = GetIt.I.get<FavoritesCubit>();
-    _favoritesCubit.loadFavorites();
+    favoritesCubit = GetIt.I.get<FavoritesCubit>();
+    favoritesCubit.loadFavorites();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarStar(
-        title: 'Personagens',
+        title: 'Planetas',
       ),
-      body: BlocBuilder<PersonCubit, PersonState>(
-        bloc: _personBloc,
+      body: BlocBuilder<PlanetCubit, PlanetState>(
+        bloc: _planetBloc,
         builder: (context, state) {
-          if (state is PersonSuccessState) {
-            _people = state.person;
+          if (state is PlanetSuccessState) {
+            planets = state.planet;
             return BlocBuilder<FavoritesCubit, FavoritesState>(
-              bloc: _favoritesCubit,
+              bloc: favoritesCubit,
               builder: (context, favoritesState) {
                 if (favoritesState is FavoritesSuccessState) {
                   final favorites = favoritesState.favorite;
-                  _isFavoriteList = List<bool>.filled(_people.length, false);
-                  for (var i = 0; i < _people.length; i++) {
-                    final person = _people[i];
-                    _isFavoriteList[i] = favorites
-                        .any((favorite) => favorite.name == person.name);
+                  isFavoriteList = List<bool>.filled(planets.length, false);
+                  for (var i = 0; i < planets.length; i++) {
+                    final planet = planets[i];
+                    isFavoriteList[i] = favorites
+                        .any((favorite) => favorite.name == planet.name);
                   }
                 }
 
                 return ListView.builder(
-                  itemCount: _people.length,
+                  itemCount: planets.length,
                   itemBuilder: (context, index) {
-                    final person = _people[index];
-                    final isFavorite = _isFavoriteList[index];
+                    final planet = planets[index];
+                    final isFavorite = isFavoriteList[index];
 
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -64,45 +65,43 @@ class _PersonPageState extends State<PersonPage> {
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  PersonDetailScreen(person: person),
+                                  PlanetDetailsScreen(planet: planet),
                             ));
                           },
                           child: ListTile(
                             title: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(person.name),
+                                Text(planet.name),
                                 IconButton(
                                   onPressed: () {
-                                    final favoritePerson = Favorites(
-                                      name: person.name,
-                                      category: 'Personagens',
+                                    final favoritePlanet = Favorites(
+                                      name: planet.name,
+                                      category: 'Planetas',
                                     );
                                     if (isFavorite) {
-                                      _favoritesCubit.removeFavorite(
-                                        favoritePerson,
-                                      );
+                                      favoritesCubit
+                                          .removeFavorite(favoritePlanet);
                                       ScaffoldMessenger.of(context)
                                           .hideCurrentSnackBar();
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                            'Personagem removido dos favoritos.',
+                                            'Planeta removido dos favoritos.',
                                           ),
                                         ),
                                       );
                                     } else {
-                                      _favoritesCubit.addFavorite(
-                                        favoritePerson,
-                                      );
+                                      favoritesCubit
+                                          .addFavorite(favoritePlanet);
                                       ScaffoldMessenger.of(context)
                                           .hideCurrentSnackBar();
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                            'Personagem adicionado aos favoritos.',
+                                            'Planeta adicionado aos favoritos.',
                                           ),
                                         ),
                                       );
@@ -116,7 +115,7 @@ class _PersonPageState extends State<PersonPage> {
                                 ),
                               ],
                             ),
-                            subtitle: Text(person.birthYear),
+                            subtitle: Text(planet.population),
                           ),
                         ),
                       ),
@@ -125,7 +124,8 @@ class _PersonPageState extends State<PersonPage> {
                 );
               },
             );
-          } else if (state is PersonErrorState) {
+          }
+          if (state is PlanetErrorState) {
             return Center(
               child: Text(state.error),
             );

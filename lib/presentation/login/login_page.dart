@@ -1,4 +1,4 @@
-import 'package:desafio_starwars_flutter/pages/pages.dart';
+import 'package:desafio_starwars_flutter/presentation/pages.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {

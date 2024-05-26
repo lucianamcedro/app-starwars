@@ -23,7 +23,7 @@ class AppBarStar extends StatelessWidget implements PreferredSizeWidget {
           fontSize: 20,
         ),
       ),
-      centerTitle: false,
+      centerTitle: true,
       iconTheme: IconThemeData(
         color: Colors.black,
       ),
