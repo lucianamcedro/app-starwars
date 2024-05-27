@@ -57,7 +57,6 @@ class PlanetDetailsScreen extends StatelessWidget {
                       buildDetailItem('População', planetModel.population),
                       buildDetailItem('Clima', planetModel.climate),
                       buildDetailItem('Tamanho', planetModel.diameter),
-                      buildDetailItem('Gravidade', planetModel.diameter),
                       buildDetailItem(
                           'Período orbital', planetModel.orbitalPeriod),
                       buildDetailItem(
