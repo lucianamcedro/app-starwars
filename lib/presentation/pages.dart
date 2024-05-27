@@ -1,5 +1,5 @@
 export 'home/home.dart';
 export 'detail/detail.dart';
-export 'login/login.dart';
+export 'auth/auth.dart';
 export 'favorites/favorites.dart';
-export 'bloc/bloc.dart';
+export 'cubit/bloc.dart';

@@ -48,7 +48,7 @@ class PlanetRepositoryImpl implements PlanetRepository {
       await prefs.setString(cacheKey, cachedData);
 
       return allPlanets;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       log('Erro ao buscar dados', error: e);
       throw Exception('Erro ao buscar dados');
     }

@@ -1,9 +1,13 @@
+import 'package:desafio_starwars_flutter/data/usecase/auth/auth.dart';
 import 'package:desafio_starwars_flutter/starwars.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 
 class DependencyInjection {
   static initialize() {
     final GetIt getIt = GetIt.instance;
+
+    getIt.registerSingleton<FirebaseAuth>(FirebaseAuth.instance);
 
     // REPOSITORY
     getIt.registerFactory<PersonRepository>(
@@ -20,6 +24,10 @@ class DependencyInjection {
 
     getIt.registerFactory<FavoritesRepository>(
       () => PersonFavoritesRepositoryImpl(),
+    );
+
+    getIt.registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImpl(),
     );
 
     // USE CASE
@@ -47,6 +55,12 @@ class DependencyInjection {
       ),
     );
 
+    getIt.registerLazySingleton<AuthUsecase>(
+      () => AuthUsecaseImp(
+        authRepository: getIt<AuthRepository>(),
+      ),
+    );
+
     // BLOC
     getIt.registerFactory<PersonCubit>(
       () => PersonCubit(
@@ -68,6 +82,14 @@ class DependencyInjection {
       () => FavoritesCubit(
         favoritesUsecase: getIt<FavoritesUsecase>(),
       ),
+    );
+    getIt.registerLazySingleton<AuthCubit>(
+      () => AuthCubit(
+        authUsecase: getIt<AuthUsecase>(),
+      ),
+    );
+    getIt.registerLazySingleton<RegisterCubit>(
+      () => RegisterCubit(auth: FirebaseAuth.instance),
     );
   }
 }

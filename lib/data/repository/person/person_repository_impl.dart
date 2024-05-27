@@ -37,7 +37,7 @@ class PersonRepositoryImpl implements PersonRepository {
         await prefs.setString(cacheKey, cachedData);
 
         return allPersons;
-      } on DioError catch (e) {
+      } on DioException catch (e) {
         log('Erro ao buscar dados', error: e);
         throw Exception('Erro ao buscar dados');
       }

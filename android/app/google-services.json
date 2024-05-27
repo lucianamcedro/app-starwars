@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "256944062171",
+    "project_id": "starwars-ifood",
+    "storage_bucket": "starwars-ifood.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256944062171:android:9e95912d2adc9955f3d6fe",
+        "android_client_info": {
+          "package_name": "br.com.ludesafiontt.desafio_starwars_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "256944062171-ftn1ctcf77b8q6l4tsbq1rbspo492h04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZg2QWV0yAdDeQgMJ8LjuLNg0dBJi5EKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "256944062171-ftn1ctcf77b8q6l4tsbq1rbspo492h04.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "256944062171-d7tlbv34c7f81oc0c6ghgof3cddm7q9t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.ludesafiontt.desafioStarwarsFlutter"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

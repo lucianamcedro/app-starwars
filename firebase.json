@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"starwars-ifood","appId":"1:256944062171:android:9e95912d2adc9955f3d6fe","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"starwars-ifood","configurations":{"android":"1:256944062171:android:9e95912d2adc9955f3d6fe","ios":"1:256944062171:ios:91d65bf9a58bb6f0f3d6fe"}}}}}}
