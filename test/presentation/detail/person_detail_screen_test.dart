@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  final person = Person(
+  final person = PersonModel(
     name: "Luke Skywalker",
     birthYear: '19BBY',
     gender: 'Male',

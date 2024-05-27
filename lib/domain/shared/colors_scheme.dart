@@ -9,4 +9,7 @@ class ColorsScheme {
   static Color grey2 = const Color(0xFFeeeeef);
   static Color grey3 = const Color(0xFFC4C4C4);
   static Color black = Color(0xFF000000);
+  static Color menu = Color(0xFF09184D);
+  static Color buttons = Color(0xFF7B5BF2);
+  static Color background = Color(0xFFEDF2FA);
 }

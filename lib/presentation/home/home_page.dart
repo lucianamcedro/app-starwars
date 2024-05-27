@@ -12,13 +12,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final authCubit = GetIt.I.get<AuthCubit>();
+  final PageController _pageController = PageController();
 
   int _selectedIndex = 0;
-
-  static const List<Widget> _pages = <Widget>[
-    HomeScreen(),
-    FavoritesPage(name: ''),
-  ];
 
   void _onItemTapped(int index) {
     if (index == 2) {
@@ -27,6 +23,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _selectedIndex = index;
       });
+      _pageController.jumpToPage(index);
     }
   }
 
@@ -42,10 +39,18 @@ class _HomePageState extends State<HomePage> {
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.black,
-        body: IndexedStack(
-          index: _selectedIndex,
-          children: _pages,
+        backgroundColor: ColorsScheme.background,
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          children: [
+            HomeScreen(),
+            FavoritesPage(name: ''),
+          ],
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
@@ -63,9 +68,9 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
           currentIndex: _selectedIndex,
-          backgroundColor: ColorsScheme.black,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: ColorsScheme.greyDark,
+          backgroundColor: ColorsScheme.menu,
+          selectedItemColor: ColorsScheme.buttons,
+          unselectedItemColor: ColorsScheme.white,
           onTap: _onItemTapped,
         ),
       ),

@@ -27,6 +27,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorsScheme.background,
       appBar: AppBarStar(
         title: 'Meus Favoritos',
       ),
@@ -67,14 +68,20 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   child: Column(
                     children: [
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       if (moviesFavorites.isNotEmpty) ...[
                         _buildCategoryList('Filmes', moviesFavorites),
                       ],
+                      const SizedBox(
+                        height: 15,
+                      ),
                       if (planetsFavorites.isNotEmpty) ...[
                         _buildCategoryList('Planetas', planetsFavorites),
                       ],
+                      const SizedBox(
+                        height: 15,
+                      ),
                       if (charactersFavorites.isNotEmpty) ...[
                         _buildCategoryList('Personagens', charactersFavorites),
                       ],
@@ -95,7 +102,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
 
   Widget _buildCategoryList(String categoryTitle, List<Favorites> favorites) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -110,31 +117,35 @@ class _FavoritesPageState extends State<FavoritesPage> {
           ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
             itemCount: favorites.length,
             itemBuilder: (context, index) {
               final favoriteItem = favorites[index];
-              return ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(favoriteItem.name),
-                    IconButton(
-                      onPressed: () {
-                        favoritesCubit.removeFavorite(favoriteItem);
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Removido dos favoritos'),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
-                      },
-                      icon: Icon(
-                        Icons.star,
-                        color: Colors.amber,
+              return Card(
+                color: ColorsScheme.greyLight,
+                child: ListTile(
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(favoriteItem.name),
+                      IconButton(
+                        onPressed: () {
+                          favoritesCubit.removeFavorite(favoriteItem);
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Removido dos favoritos'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },

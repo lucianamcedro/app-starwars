@@ -1,3 +1,4 @@
+import 'package:desafio_starwars_flutter/domain/domain.dart';
 import 'package:flutter/material.dart';
 
 class AppBarStar extends StatelessWidget implements PreferredSizeWidget {
@@ -18,14 +19,14 @@ class AppBarStar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         title,
         style: TextStyle(
-          color: Colors.white,
+          color: ColorsScheme.black,
           fontWeight: FontWeight.bold,
           fontSize: 20,
         ),
       ),
       centerTitle: true,
       iconTheme: IconThemeData(
-        color: Colors.white,
+        color: ColorsScheme.black,
       ),
     );
   }

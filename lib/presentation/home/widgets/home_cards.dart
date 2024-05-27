@@ -68,7 +68,7 @@ class HomeScreen extends StatelessWidget {
           onTap: onTap,
           child: Card(
             elevation: 9,
-            color: ColorsScheme.grey3,
+            color: ColorsScheme.greyLight,
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 30.0, horizontal: 10.0),
@@ -80,7 +80,7 @@ class HomeScreen extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: ColorsScheme.black,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),

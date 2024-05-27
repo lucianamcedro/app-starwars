@@ -30,7 +30,7 @@ class _PlanetPageState extends State<PlanetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorsScheme.black,
+      backgroundColor: ColorsScheme.background,
       appBar: AppBarStar(
         title: 'Planetas',
       ),
@@ -61,7 +61,7 @@ class _PlanetPageState extends State<PlanetPage> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Card(
-                        color: ColorsScheme.greyDark,
+                        color: ColorsScheme.greyLight,
                         elevation: 6,
                         child: InkWell(
                           onTap: () {
@@ -71,7 +71,7 @@ class _PlanetPageState extends State<PlanetPage> {
                             ));
                           },
                           child: ListTile(
-                            textColor: Colors.white,
+                            textColor: ColorsScheme.black,
                             title: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -94,7 +94,7 @@ class _PlanetPageState extends State<PlanetPage> {
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color: ColorsScheme.black,
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -144,7 +144,7 @@ class _PlanetPageState extends State<PlanetPage> {
                                     Icons.star,
                                     color: isFavorite
                                         ? Colors.amber
-                                        : Colors.white,
+                                        : ColorsScheme.grey,
                                   ),
                                 ),
                               ],

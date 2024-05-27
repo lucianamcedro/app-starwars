@@ -29,7 +29,7 @@ class _PersonPageState extends State<PersonPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorsScheme.black,
+      backgroundColor: ColorsScheme.background,
       appBar: AppBarStar(
         title: 'Personagens',
       ),
@@ -60,7 +60,7 @@ class _PersonPageState extends State<PersonPage> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Card(
-                        color: ColorsScheme.greyDark,
+                        color: ColorsScheme.greyLight,
                         elevation: 6,
                         child: InkWell(
                           onTap: () {
@@ -94,13 +94,18 @@ class _PersonPageState extends State<PersonPage> {
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color: ColorsScheme.black,
                                             fontSize: 16.0,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                         Text(
-                                            'Sexo: ${person.getTranslatedGender()}'),
+                                          'Sexo: ${person.getTranslatedGender()}',
+                                          style: TextStyle(
+                                            color: ColorsScheme.black,
+                                            fontSize: 16.0,
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ],
@@ -146,7 +151,7 @@ class _PersonPageState extends State<PersonPage> {
                                     Icons.star,
                                     color: isFavorite
                                         ? Colors.amber
-                                        : Colors.white,
+                                        : ColorsScheme.grey,
                                   ),
                                 ),
                               ],
