@@ -7,7 +7,7 @@ class PersonInitialState extends PersonState {}
 class PersonLoadingState extends PersonState {}
 
 class PersonSuccessState extends PersonState {
-  final List<Person> person;
+  final List<PersonModel> person;
 
   PersonSuccessState({required this.person});
 }

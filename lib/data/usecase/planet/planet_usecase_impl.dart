@@ -6,7 +6,7 @@ class PlanetUsecaseImpl implements PlanetUsecase {
   PlanetUsecaseImpl({required this.planetRepository});
 
   @override
-  Future<List<Planet>> getPlanets() {
+  Future<List<PlanetModel>> getPlanets() {
     return planetRepository.getPlanets();
   }
 }

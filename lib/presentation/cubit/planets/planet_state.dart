@@ -7,7 +7,7 @@ class PlanetInitialState extends PlanetState {}
 class PlanetLoadingState extends PlanetState {}
 
 class PlanetSuccessState extends PlanetState {
-  final List<Planet> planet;
+  final List<PlanetModel> planet;
 
   PlanetSuccessState({required this.planet});
 }

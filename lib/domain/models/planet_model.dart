@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class Planet {
+class PlanetModel {
   final String name;
   final String rotationPeriod;
   final String orbitalPeriod;
@@ -15,7 +15,7 @@ class Planet {
   final String edited;
   final String url;
 
-  Planet({
+  PlanetModel({
     required this.name,
     required this.rotationPeriod,
     required this.orbitalPeriod,
@@ -31,8 +31,8 @@ class Planet {
     required this.url,
   });
 
-  factory Planet.fromJson(Map<String, dynamic> json) {
-    return Planet(
+  factory PlanetModel.fromJson(Map<String, dynamic> json) {
+    return PlanetModel(
       name: json['name'],
       rotationPeriod: json['rotation_period'],
       orbitalPeriod: json['orbital_period'],
@@ -49,8 +49,8 @@ class Planet {
     );
   }
 
-  factory Planet.fromMap(Map<String, dynamic> map) {
-    return Planet(
+  factory PlanetModel.fromMap(Map<String, dynamic> map) {
+    return PlanetModel(
       name: map['name'] ?? "",
       rotationPeriod: map['rotation_period'] ?? "",
       orbitalPeriod: map['orbital_period'] ?? "",

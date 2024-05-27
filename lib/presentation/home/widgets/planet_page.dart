@@ -15,7 +15,7 @@ class _PlanetPageState extends State<PlanetPage> {
   late PlanetCubit _planetBloc;
   late FavoritesCubit favoritesCubit;
   List<bool> isFavoriteList = [];
-  List<Planet> planets = [];
+  List<PlanetModel> planets = [];
 
   @override
   void initState() {
@@ -30,6 +30,7 @@ class _PlanetPageState extends State<PlanetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorsScheme.black,
       appBar: AppBarStar(
         title: 'Planetas',
       ),
@@ -60,19 +61,50 @@ class _PlanetPageState extends State<PlanetPage> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Card(
-                        elevation: 5,
+                        color: ColorsScheme.greyDark,
+                        elevation: 6,
                         child: InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  PlanetDetailsScreen(planet: planet),
+                                  PlanetDetailsScreen(planetModel: planet),
                             ));
                           },
                           child: ListTile(
+                            textColor: Colors.white,
                             title: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(planet.name),
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/exo.png',
+                                      height: 50.0,
+                                      width: 50.0,
+                                    ),
+                                    const SizedBox(
+                                      width: 10.0,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Nome: ${planet.name}',
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                            'População: ${planet.population != 'unknown' ? planet.population : 'Não Especificado'}'),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                                 IconButton(
                                   onPressed: () {
                                     final favoritePlanet = Favorites(
@@ -90,6 +122,7 @@ class _PlanetPageState extends State<PlanetPage> {
                                           content: Text(
                                             'Planeta removido dos favoritos.',
                                           ),
+                                          backgroundColor: Colors.red,
                                         ),
                                       );
                                     } else {
@@ -109,13 +142,13 @@ class _PlanetPageState extends State<PlanetPage> {
                                   },
                                   icon: Icon(
                                     Icons.star,
-                                    color:
-                                        isFavorite ? Colors.amber : Colors.grey,
+                                    color: isFavorite
+                                        ? Colors.amber
+                                        : Colors.white,
                                   ),
                                 ),
                               ],
                             ),
-                            subtitle: Text(planet.population),
                           ),
                         ),
                       ),

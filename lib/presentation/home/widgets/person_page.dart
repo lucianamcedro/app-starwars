@@ -14,7 +14,7 @@ class _PersonPageState extends State<PersonPage> {
   late PersonCubit _personBloc;
   late FavoritesCubit _favoritesCubit;
   List<bool> _isFavoriteList = [];
-  List<Person> _people = [];
+  List<PersonModel> _people = [];
 
   @override
   void initState() {
@@ -29,6 +29,7 @@ class _PersonPageState extends State<PersonPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorsScheme.black,
       appBar: AppBarStar(
         title: 'Personagens',
       ),
@@ -59,7 +60,8 @@ class _PersonPageState extends State<PersonPage> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Card(
-                        elevation: 5,
+                        color: ColorsScheme.greyDark,
+                        elevation: 6,
                         child: InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
@@ -68,10 +70,41 @@ class _PersonPageState extends State<PersonPage> {
                             ));
                           },
                           child: ListTile(
+                            textColor: Colors.white,
                             title: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(person.name),
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      person.getImagePath(),
+                                      height: 50.0,
+                                      width: 50.0,
+                                    ),
+                                    const SizedBox(
+                                      width: 10.0,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Nome: ${person.name}',
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16.0,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                            'Sexo: ${person.getTranslatedGender()}'),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                                 IconButton(
                                   onPressed: () {
                                     final favoritePerson = Favorites(
@@ -90,6 +123,7 @@ class _PersonPageState extends State<PersonPage> {
                                           content: Text(
                                             'Personagem removido dos favoritos.',
                                           ),
+                                          backgroundColor: Colors.red,
                                         ),
                                       );
                                     } else {
@@ -110,13 +144,13 @@ class _PersonPageState extends State<PersonPage> {
                                   },
                                   icon: Icon(
                                     Icons.star,
-                                    color:
-                                        isFavorite ? Colors.amber : Colors.grey,
+                                    color: isFavorite
+                                        ? Colors.amber
+                                        : Colors.white,
                                   ),
                                 ),
                               ],
                             ),
-                            subtitle: Text(person.birthYear),
                           ),
                         ),
                       ),

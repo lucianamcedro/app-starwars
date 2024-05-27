@@ -6,7 +6,7 @@ class PersonsUsecaseImpl implements PersonsUsecase {
   PersonsUsecaseImpl({required this.personRepository});
 
   @override
-  Future<List<Person>> getPersons() {
+  Future<List<PersonModel>> getPersons() {
     return personRepository.getPersons();
   }
 }

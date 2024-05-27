@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class Movies {
+class MoviesModel {
   final String title;
   final int episodeId;
   final String openingCrawl;
@@ -16,7 +16,7 @@ class Movies {
   final DateTime edited;
   final String url;
 
-  Movies({
+  MoviesModel({
     required this.title,
     required this.episodeId,
     required this.openingCrawl,
@@ -33,8 +33,8 @@ class Movies {
     required this.url,
   });
 
-  factory Movies.fromMap(Map<String, dynamic> map) {
-    return Movies(
+  factory MoviesModel.fromMap(Map<String, dynamic> map) {
+    return MoviesModel(
       title: map['title'],
       episodeId: map['episode_id'],
       openingCrawl: map['opening_crawl'],
@@ -52,8 +52,8 @@ class Movies {
     );
   }
 
-  factory Movies.fromJson(String json) {
-    return Movies.fromMap(jsonDecode(json));
+  factory MoviesModel.fromJson(String json) {
+    return MoviesModel.fromMap(jsonDecode(json));
   }
 
   Map<String, dynamic> toMap() {
@@ -75,8 +75,8 @@ class Movies {
     };
   }
 
-  factory Movies.fromMapJson(Map<String, dynamic> map) {
-    return Movies(
+  factory MoviesModel.fromMapJson(Map<String, dynamic> map) {
+    return MoviesModel(
       title: map['title'],
       episodeId: map['episode_id'],
       openingCrawl: map['opening_crawl'],

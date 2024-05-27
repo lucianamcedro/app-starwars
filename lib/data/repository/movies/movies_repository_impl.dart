@@ -9,7 +9,7 @@ class MoviesRepositoryImpl implements MoviesRepository {
   static const String cacheKey = 'movies_cache';
 
   @override
-  Future<List<Movies>> getMovies() async {
+  Future<List<MoviesModel>> getMovies() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final cachedData = prefs.getString(cacheKey);
 
@@ -18,7 +18,7 @@ class MoviesRepositoryImpl implements MoviesRepository {
         final decodedData = jsonDecode(cachedData);
         if (decodedData is List) {
           final moviesList = decodedData
-              .map((e) => Movies.fromMap(Map<String, dynamic>.from(e)))
+              .map((e) => MoviesModel.fromMap(Map<String, dynamic>.from(e)))
               .toList();
 
           return moviesList;
@@ -31,7 +31,7 @@ class MoviesRepositoryImpl implements MoviesRepository {
     try {
       final result = await Dio().get(ApiConsts.baseUrlMovies);
       final dados = result.data['results'] as List;
-      final moviesList = dados.map((e) => Movies.fromMap(e)).toList();
+      final moviesList = dados.map((e) => MoviesModel.fromMap(e)).toList();
 
       final cachedData =
           jsonEncode(moviesList.map((movie) => movie.toMap()).toList());

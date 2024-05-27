@@ -6,7 +6,7 @@ class MoviesUsecaseImpl implements MoviesUsecase {
   MoviesUsecaseImpl({required this.moviesRepository});
 
   @override
-  Future<List<Movies>> getMovies() {
+  Future<List<MoviesModel>> getMovies() {
     return moviesRepository.getMovies();
   }
 }

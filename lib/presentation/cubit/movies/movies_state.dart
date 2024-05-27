@@ -7,7 +7,7 @@ class MoviesInitialState extends MoviesState {}
 class MoviesLoadingState extends MoviesState {}
 
 class MoviesSuccessState extends MoviesState {
-  final List<Movies> movies;
+  final List<MoviesModel> movies;
 
   MoviesSuccessState({required this.movies});
 }

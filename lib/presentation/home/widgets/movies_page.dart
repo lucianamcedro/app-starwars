@@ -2,7 +2,9 @@ import 'package:desafio_starwars_flutter/presentation/detail/movie_details_scree
 import 'package:desafio_starwars_flutter/starwars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 
 class MoviesPage extends StatefulWidget {
   const MoviesPage({super.key});
@@ -15,7 +17,7 @@ class _MoviesPageState extends State<MoviesPage> {
   late MoviesCubit _moviesBloc;
   late FavoritesCubit favoritesCubit;
   List<bool> isFavoriteList = [];
-  List<Movies> movies = [];
+  List<MoviesModel> movies = [];
 
   @override
   void initState() {
@@ -30,6 +32,7 @@ class _MoviesPageState extends State<MoviesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorsScheme.black,
       appBar: AppBarStar(
         title: 'Filmes',
       ),
@@ -46,8 +49,9 @@ class _MoviesPageState extends State<MoviesPage> {
                   isFavoriteList = List<bool>.filled(movies.length, false);
                   for (var i = 0; i < movies.length; i++) {
                     final movie = movies[i];
-                    isFavoriteList[i] = favorites
-                        .any((favorite) => favorite.name == movie.title);
+                    isFavoriteList[i] = favorites.any(
+                      (favorite) => favorite.name == movie.title,
+                    );
                   }
                 }
 
@@ -60,64 +64,101 @@ class _MoviesPageState extends State<MoviesPage> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Card(
-                        elevation: 5,
+                        color: ColorsScheme.greyDark,
+                        elevation: 6,
                         child: InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  MovieDetailsScreen(movies: movie),
+                                  MovieDetailsScreen(moviesModel: movie),
                             ));
                           },
                           child: ListTile(
+                            contentPadding: EdgeInsets.zero,
                             title: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(movie.title),
+                                Expanded(
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/images/movies.svg',
+                                        width: 50,
+                                        height: 50,
+                                      ),
+                                      SizedBox(width: 10.0),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Nome: ${movie.title}',
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            Text(
+                                              'Data: ${DateFormat('dd/MM/yyyy').format(movie.releaseDate)}',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14.0,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 IconButton(
                                   onPressed: () {
                                     final favoriteMovie = Favorites(
-                                      category: 'Movies',
+                                      category: 'Filmes',
                                       name: movie.title,
                                     );
                                     if (isFavorite) {
-                                      favoritesCubit.removeFavorite(
-                                        favoriteMovie,
-                                      );
+                                      favoritesCubit
+                                          .removeFavorite(favoriteMovie);
                                       ScaffoldMessenger.of(context)
                                           .hideCurrentSnackBar();
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                            'Filme removido dos favoritos.',
-                                          ),
+                                              'Filme removido dos favoritos.'),
+                                          backgroundColor: Colors.red,
                                         ),
                                       );
                                     } else {
-                                      favoritesCubit.addFavorite(
-                                        favoriteMovie,
-                                      );
+                                      favoritesCubit.addFavorite(favoriteMovie);
                                       ScaffoldMessenger.of(context)
                                           .hideCurrentSnackBar();
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(
                                         SnackBar(
                                           content: Text(
-                                            'Filme adicionado aos favoritos.',
-                                          ),
+                                              'Filme adicionado aos favoritos.'),
                                         ),
                                       );
                                     }
                                   },
                                   icon: Icon(
                                     Icons.star,
-                                    color:
-                                        isFavorite ? Colors.amber : Colors.grey,
+                                    color: isFavorite
+                                        ? Colors.amber
+                                        : Colors.white,
                                   ),
                                 ),
                               ],
                             ),
-                            subtitle: Text(movie.producer),
                           ),
                         ),
                       ),

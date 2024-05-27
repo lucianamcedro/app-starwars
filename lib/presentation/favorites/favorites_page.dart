@@ -21,15 +21,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   void initState() {
     super.initState();
-    favoritesCubit = GetIt.I.get<FavoritesCubit>();
-    favoritesCubit.loadFavorites();
+    favoritesCubit = GetIt.I.get<FavoritesCubit>()..loadFavorites();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarStar(
-        title: 'Favorites',
+        title: 'Meus Favoritos',
       ),
       body: Builder(
         builder: (context) {
@@ -40,7 +39,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 final favorites = state.favorite;
 
                 moviesFavorites = favorites
-                    .where((favorite) => favorite.category == 'Movies')
+                    .where((favorite) => favorite.category == 'Filmes')
                     .toList();
                 planetsFavorites = favorites
                     .where((favorite) => favorite.category == 'Planetas')
@@ -49,9 +48,16 @@ class _FavoritesPageState extends State<FavoritesPage> {
                     .where((favorite) => favorite.category == 'Personagens')
                     .toList();
 
-                if (favorites.isEmpty) {
+                if (moviesFavorites.isEmpty &&
+                    planetsFavorites.isEmpty &&
+                    charactersFavorites.isEmpty) {
                   return Center(
-                    child: Text('Nenhum favorito.'),
+                    child: Text(
+                      'Nenhum favorito à ser exibido.',
+                      style: TextStyle(
+                        color: ColorsScheme.black,
+                      ),
+                    ),
                   );
                 }
 
@@ -61,7 +67,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   child: Column(
                     children: [
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       if (moviesFavorites.isNotEmpty) ...[
                         _buildCategoryList('Filmes', moviesFavorites),
@@ -88,47 +94,53 @@ class _FavoritesPageState extends State<FavoritesPage> {
   }
 
   Widget _buildCategoryList(String categoryTitle, List<Favorites> favorites) {
-    return Column(
-      children: [
-        Text(
-          categoryTitle,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
+    return Padding(
+      padding: const EdgeInsets.only(left: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            categoryTitle,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
           ),
-        ),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: favorites.length,
-          itemBuilder: (context, index) {
-            final favoriteItem = favorites[index];
-            return ListTile(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(favoriteItem.name),
-                  IconButton(
-                    onPressed: () {
-                      favoritesCubit.removeFavorite(favoriteItem);
-                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Removido dos favoritos'),
-                        ),
-                      );
-                    },
-                    icon: Icon(
-                      Icons.star,
-                      color: Colors.amber,
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: favorites.length,
+            itemBuilder: (context, index) {
+              final favoriteItem = favorites[index];
+              return ListTile(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(favoriteItem.name),
+                    IconButton(
+                      onPressed: () {
+                        favoritesCubit.removeFavorite(favoriteItem);
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Removido dos favoritos'),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      },
+                      icon: Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      ],
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }

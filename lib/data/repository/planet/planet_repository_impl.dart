@@ -8,7 +8,7 @@ class PlanetRepositoryImpl implements PlanetRepository {
   static const String cacheKey = 'planet_cache';
 
   @override
-  Future<List<Planet>> getPlanets() async {
+  Future<List<PlanetModel>> getPlanets() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final cachedData = prefs.getString(cacheKey);
 
@@ -17,7 +17,7 @@ class PlanetRepositoryImpl implements PlanetRepository {
         final decodedData = jsonDecode(cachedData);
         if (decodedData is List) {
           final planetMapsList = decodedData
-              .map((e) => Planet.fromMap(Map<String, dynamic>.from(e)))
+              .map((e) => PlanetModel.fromMap(Map<String, dynamic>.from(e)))
               .toList();
 
           return planetMapsList;
@@ -28,14 +28,14 @@ class PlanetRepositoryImpl implements PlanetRepository {
     }
 
     try {
-      final List<Planet> allPlanets = [];
+      final List<PlanetModel> allPlanets = [];
 
       for (int i = 1; i <= 60; i++) {
         try {
           final response = await Dio().get('${ApiConsts.baseUrlPlanets}/$i');
           final data = response.data;
 
-          final planet = Planet.fromMap(data);
+          final planet = PlanetModel.fromMap(data);
           allPlanets.add(planet);
         } catch (e) {
           log('Erro ao buscar dados do planeta $i', error: e);
