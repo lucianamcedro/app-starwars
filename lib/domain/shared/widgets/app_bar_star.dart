@@ -18,14 +18,14 @@ class AppBarStar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         title,
         style: TextStyle(
-          color: Colors.black,
+          color: Colors.white,
           fontWeight: FontWeight.bold,
           fontSize: 20,
         ),
       ),
       centerTitle: true,
       iconTheme: IconThemeData(
-        color: Colors.black,
+        color: Colors.white,
       ),
     );
   }
