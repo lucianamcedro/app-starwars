@@ -28,4 +28,11 @@ Favoritar personagens, planetas e filmes para acessá-los facilmente posteriorme
 Autenticação de usuários usando Firebase Authentication, permitindo que os usuários acessem recursos exclusivos e mantenham suas informações personalizadas.
 
 ## Estado Atual do Projeto
-O projeto está em um estado funcional, porém ainda há alguns aspectos a serem finalizados. O que ficou faltando terminar foi a implementação de testes completos para todas as partes do aplicativo. Você pode ver o progresso atual e as tarefas pendentes no board do Trello.
+O projeto está em um estado funcional, porém ainda há alguns aspectos a serem finalizados. O que ficou faltando terminar foi a implementação de testes completos para todas as partes do aplicativo.  Além de implementar os testes completos, uma melhoria que também poderia ser feita é aprimorar o layout do aplicativo. Um layout intuitivo e atraente pode melhorar significativamente a experiência do usuário, tornando a navegação mais fluida e agradável. 
+
+Você pode ver o progresso atual e as tarefas pendentes no board do Trello.
+
+
+![Alt Text](assets/images/starwarsapp.gif)
+
+
