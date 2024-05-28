@@ -54,22 +54,22 @@ class _LoginPageState extends State<LoginPage> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Image.asset(
-            'assets/images/background.jpg',
-            width: size.width,
-            height: size.height,
-            fit: BoxFit.cover,
-          ),
-          Container(color: Colors.black45),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20.0,
-              vertical: 50.0,
+      body: SingleChildScrollView(
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.asset(
+              'assets/images/background.jpg',
+              width: size.width,
+              height: size.height,
+              fit: BoxFit.cover,
             ),
-            child: SingleChildScrollView(
+            Container(color: Colors.black45),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 50.0,
+              ),
               child: Column(
                 children: [
                   Image.asset(
@@ -92,9 +92,9 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

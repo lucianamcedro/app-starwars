@@ -39,47 +39,49 @@ class _RegisterPageState extends State<RegisterPage> {
     final sizeHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Image.asset(
-            'assets/images/registerImage.jpg',
-            width: sizeHeight,
-            height: sizeHeight,
-            fit: BoxFit.cover,
-          ),
-          Container(color: Colors.black45),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 20.0,
-              vertical: 50.0,
+      body: SingleChildScrollView(
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Image.asset(
+              'assets/images/registerImage.jpg',
+              width: sizeHeight,
+              height: sizeHeight,
+              fit: BoxFit.cover,
             ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Image.asset(
-                    'assets/images/logo.png',
-                    width: 150.0,
-                    height: 150.0,
-                  ),
-                  SizedBox(
-                    height: sizeHeight * .15,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: ColorsScheme.white.withOpacity(0.50),
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: _buildRegisterForm(sizeHeight),
-                    ),
-                  ),
-                ],
+            Container(color: Colors.black45),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 50.0,
               ),
-            ),
-          )
-        ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'assets/images/logo.png',
+                      width: 150.0,
+                      height: 150.0,
+                    ),
+                    SizedBox(
+                      height: sizeHeight * .15,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: ColorsScheme.white.withOpacity(0.50),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: _buildRegisterForm(sizeHeight),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
