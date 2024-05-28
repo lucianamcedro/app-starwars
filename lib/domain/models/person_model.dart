@@ -176,7 +176,7 @@ class PersonModel {
     } else if (name == 'Darth Maul') {
       return 'assets/images/maul.png';
     } else {
-      return 'assets/images/venus.png';
+      return 'assets/images/death.png';
     }
   }
 }

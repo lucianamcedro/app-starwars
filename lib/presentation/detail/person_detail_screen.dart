@@ -10,7 +10,7 @@ class PersonDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: ColorsScheme.black,
+      backgroundColor: ColorsScheme.background,
       appBar: AppBarStar(
         title: 'Detalhes do personagem',
       ),
@@ -18,38 +18,41 @@ class PersonDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: size.width,
-              height: size.height * 0.3,
-              decoration: BoxDecoration(
-                color: ColorsScheme.greyDark,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 5,
-                    offset: Offset(0, 3),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Container(
+                width: size.width,
+                height: size.height * 0.3,
+                decoration: BoxDecoration(
+                  color: ColorsScheme.greyDark,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30),
                   ),
-                ],
-                image: DecorationImage(
-                  image: AssetImage('assets/images/one.jpeg'),
-                  fit: BoxFit.cover,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/one.jpeg'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8),
               child: Card(
-                color: ColorsScheme.greyDark,
+                color: ColorsScheme.greyLight,
                 elevation: 6,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -88,7 +91,7 @@ class PersonDetailScreen extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16.0,
-              color: Colors.white,
+              color: ColorsScheme.black,
             ),
           ),
           Expanded(
@@ -96,7 +99,7 @@ class PersonDetailScreen extends StatelessWidget {
               value,
               style: TextStyle(
                 fontSize: 16.0,
-                color: Colors.white,
+                color: ColorsScheme.black,
               ),
             ),
           ),
